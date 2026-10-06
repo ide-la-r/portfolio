@@ -10,7 +10,8 @@ interface Props {
 const { locale } = Astro.props;
 const copy = t(locale);
 const canonical = getAbsoluteLocaleUrl(locale, '');
-const ogImage = new URL('/og.png', Astro.site).href;
+// The link preview shown by LinkedIn and friends, one per language (1200 × 630)
+const ogImage = new URL(`/og-${locale}.png`, Astro.site).href;
 
 const person = {
   '@context': 'https://schema.org',
@@ -43,6 +44,9 @@ const person = {
     <meta property="og:description" content={copy.meta.description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={`${profile.shortName} · ${copy.hero.role}`} />
     <meta property="og:locale" content={copy.meta.ogLocale} />
     <meta name="twitter:card" content="summary_large_image" />
 
