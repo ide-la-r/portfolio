@@ -8,6 +8,7 @@ import { heroTimeline } from './chapters/hero';
 import { routeScene } from './chapters/route';
 import { workScene } from './chapters/work';
 import { deviceScene } from './chapters/device';
+import { stackLayers } from './chapters/stack';
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
@@ -36,6 +37,7 @@ export function startMotion(): void {
 
     heroTimeline();
     revealOnEnter();
+    stackLayers();
   }
 
   // Web fonts change text metrics, so triggers are recalculated once they load.
