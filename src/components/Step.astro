@@ -1,0 +1,15 @@
+---
+interface Props {
+  /** Lets a scene find a step by meaning rather than by position. */
+  name?: string;
+  id?: string;
+}
+
+const { name, id } = Astro.props;
+---
+
+<div class="scrolly-step" data-step data-step-name={name} id={id}>
+  <div class="min-w-0 max-w-[34rem]">
+    <slot />
+  </div>
+</div>

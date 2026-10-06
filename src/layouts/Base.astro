@@ -48,9 +48,10 @@ const person = {
 
     <script type="application/ld+json" set:html={JSON.stringify(person)} />
 
-    <!-- Flag the page as animatable before first paint so nothing flashes.
-         With reduced motion the flag is not set and everything stays visible and still. -->
+    <!-- Flag the page before first paint so nothing flashes: `js` when scripts run,
+         `motion` when they may also animate. With reduced motion everything stays still. -->
     <script is:inline>
+      document.documentElement.classList.add('js');
       if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
         document.documentElement.classList.add('motion');
       }

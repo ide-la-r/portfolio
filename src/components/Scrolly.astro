@@ -1,0 +1,28 @@
+---
+/**
+ * A chapter told in steps: the `visual` slot stays on screen while the steps in the
+ * default slot scroll past it. The matching scene in src/scripts/chapters animates
+ * the visual as each step comes in.
+ */
+interface Props {
+  id: string;
+  scene: 'route' | 'work' | 'device';
+  /** Height of each step on desktop; longer copy needs taller steps. */
+  stepHeight?: string;
+}
+
+const { id, scene, stepHeight = '56svh' } = Astro.props;
+---
+
+<section id={id} data-scrolly={scene} class="relative" style={`--step-h: ${stepHeight}`}>
+  <div class="container-page scrolly-grid">
+    <div class="scrolly-visual">
+      <div class="scrolly-stage">
+        <slot name="visual" />
+      </div>
+    </div>
+    <div class="scrolly-steps" data-steps>
+      <slot />
+    </div>
+  </div>
+</section>

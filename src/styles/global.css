@@ -2,8 +2,10 @@
 @import '@fontsource-variable/geist';
 @import '@fontsource-variable/geist-mono';
 
-/* A single, deliberately dark visual world: the stage of a product keynote. */
-@theme {
+/* A single, deliberately dark visual world: the stage of a product keynote.
+   `static` emits every token even when no utility uses it: the scroll scenes read
+   them from scripts and scoped styles. */
+@theme static {
   --color-ink: #0a0d14;
   --color-panel: #101624;
   --color-panel-2: #151c2d;
@@ -61,12 +63,13 @@
 }
 
 @utility container-page {
+  --gutter: 1.25rem;
   width: 100%;
   max-width: 72rem;
   margin-inline: auto;
-  padding-inline: 1.25rem;
+  padding-inline: var(--gutter);
   @media (width >= 48rem) {
-    padding-inline: 2rem;
+    --gutter: 2rem;
   }
 }
 
@@ -86,4 +89,110 @@ html.lenis body {
    reduced motion, the page reads in full and stays still. */
 html.motion [data-reveal] {
   opacity: 0;
+}
+
+/* Parts of a scene that only make sense animated (a state the record passes
+   through, a second screen of the device) are left out when there is no script. */
+html:not(.js) [data-js-only] {
+  display: none !important;
+}
+
+/* ---------------------------------------------------------------------------
+   Scrollytelling: a visual that stays put while the steps that explain it scroll
+   past. Beside the text on desktop; above it on phones, where the steps slide
+   under the visual and fade out against its edge.
+   --------------------------------------------------------------------------- */
+@layer components {
+  .scrolly-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* Edge to edge on phones: every pixel of width goes to the scene */
+  .scrolly-visual {
+    grid-area: 1 / 1;
+    align-self: start;
+    position: sticky;
+    top: 3.5rem;
+    z-index: 1;
+    height: 56svh;
+    margin-inline: calc(var(--gutter) * -1);
+    background: var(--color-ink);
+  }
+
+  .scrolly-visual::after {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    top: 100%;
+    height: 2.5rem;
+    background: linear-gradient(var(--color-ink), transparent);
+    pointer-events: none;
+  }
+
+  .scrolly-stage {
+    position: relative;
+    height: 100%;
+    display: grid;
+    place-content: center;
+    place-items: center;
+    overflow: clip;
+  }
+
+  /* Scenes drawn at a fixed design size (data-fit="WxH") are scaled by fit.ts */
+  .scrolly-stage > [data-fit] {
+    position: relative;
+    flex: none;
+    scale: var(--fit, 1);
+  }
+
+  .scrolly-steps {
+    grid-area: 1 / 1;
+    padding-top: calc(56svh + 2.5rem);
+    padding-bottom: 16svh;
+  }
+
+  /* About the height of the reading area left under the visual, so one step
+     follows another without empty screens in between */
+  .scrolly-step {
+    min-height: 40svh;
+  }
+
+  /* Until the scene has set its first frame, its visual is not shown */
+  html.js [data-scrolly]:not([data-ready]) .scrolly-stage {
+    visibility: hidden;
+  }
+
+  @media (width >= 64rem) {
+    .scrolly-grid {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+      column-gap: 4rem;
+    }
+    .scrolly-visual {
+      grid-area: 1 / 2;
+      height: calc(100svh - 3.5rem);
+      margin-inline: 0;
+      background: none;
+    }
+    .scrolly-visual::after {
+      content: none;
+    }
+    .scrolly-steps {
+      padding-block: 8svh 32svh;
+    }
+    .scrolly-step {
+      min-height: var(--step-h, 56svh);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    /* The step being read is lit; the rest wait in the dark */
+    html.motion .scrolly-step {
+      opacity: 0.2;
+      transition: opacity 0.6s ease;
+    }
+    html.motion .scrolly-step.is-active {
+      opacity: 1;
+    }
+  }
 }
