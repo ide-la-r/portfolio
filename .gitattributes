@@ -1,0 +1,4 @@
+# Keep LF everywhere, whatever the platform the repo is checked out on
+* text=auto eol=lf
+*.pdf binary
+*.woff2 binary
