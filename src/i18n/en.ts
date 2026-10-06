@@ -33,11 +33,12 @@ export const en: Dictionary = {
     eyebrow: 'Journey',
     title: 'Five years of steady climbing',
     intro: 'From wiring networks to owning ingestion for a production SaaS. Every stop is a step up.',
-    climb: 'elevation gained',
+    climb: 'altitude',
     stops: [
       {
         year: '2021',
         kind: 'study',
+        short: 'Networks',
         title: 'Technician Diploma in Microcomputer Systems & Networks',
         place: 'IES Gerald Brenan',
         body: 'Networks, systems and hardware. This is where the route starts.',
@@ -45,6 +46,7 @@ export const en: Dictionary = {
       {
         year: '2023',
         kind: 'study',
+        short: 'Web Dev',
         title: 'Higher Technician Diploma in Web Development',
         place: 'MEDAC Nova, Málaga',
         body: 'EQF Level 5, two years post-secondary.',
@@ -52,6 +54,7 @@ export const en: Dictionary = {
       {
         year: '2024',
         kind: 'study',
+        short: '42',
         title: '42 Málaga',
         place: 'Fundación Telefónica',
         body: 'Selective full-time C and Unix immersion, learning peer to peer.',
@@ -59,6 +62,7 @@ export const en: Dictionary = {
       {
         year: '2025',
         kind: 'work',
+        short: 'Patrimar',
         title: 'Web Developer (internship)',
         place: 'Patrimar Inversiones',
         body: 'The company web platform in PHP and JavaScript, in a two-person team.',
@@ -66,6 +70,7 @@ export const en: Dictionary = {
       {
         year: '2025',
         kind: 'work',
+        short: 'Solbyte',
         title: 'PHP Full-Stack Developer',
         place: 'Solbyte',
         body: '8+ client projects to fixed agency deadlines: custom booking platforms, CRM/ERP work and internal tools. In-house and third-party REST APIs, DNS and Cloudflare.',
@@ -73,6 +78,7 @@ export const en: Dictionary = {
       {
         year: '2026',
         kind: 'work',
+        short: 'Mainjobs',
         title: 'Full-Stack PHP Engineer',
         place: 'Mainjobs',
         body: 'Ingestion and AI layers of a multi-tenant SaaS for public-sector tender tracking.',

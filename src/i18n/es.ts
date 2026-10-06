@@ -33,11 +33,12 @@ export const es: Dictionary = {
     eyebrow: 'Trayectoria',
     title: 'Cinco años de subida constante',
     intro: 'De montar redes a llevar la ingesta de un SaaS en producción. Cada parada es un escalón.',
-    climb: 'desnivel acumulado',
+    climb: 'altitud',
     stops: [
       {
         year: '2021',
         kind: 'study',
+        short: 'Redes',
         title: 'Técnico en Sistemas Microinformáticos y Redes',
         place: 'IES Gerald Brenan',
         body: 'Redes, sistemas y hardware. Aquí empieza la ruta.',
@@ -45,6 +46,7 @@ export const es: Dictionary = {
       {
         year: '2023',
         kind: 'study',
+        short: 'DAW',
         title: 'Técnico Superior en Desarrollo de Aplicaciones Web',
         place: 'MEDAC Nova, Málaga',
         body: 'Grado Superior de FP, nivel 5 MEC.',
@@ -52,6 +54,7 @@ export const es: Dictionary = {
       {
         year: '2024',
         kind: 'study',
+        short: '42',
         title: '42 Málaga',
         place: 'Fundación Telefónica',
         body: 'Inmersión selectiva a jornada completa en C y Unix, aprendiendo entre pares.',
@@ -59,6 +62,7 @@ export const es: Dictionary = {
       {
         year: '2025',
         kind: 'work',
+        short: 'Patrimar',
         title: 'Desarrollador web (prácticas)',
         place: 'Patrimar Inversiones',
         body: 'La plataforma web de la empresa en PHP y JavaScript, en un equipo de dos.',
@@ -66,6 +70,7 @@ export const es: Dictionary = {
       {
         year: '2025',
         kind: 'work',
+        short: 'Solbyte',
         title: 'Desarrollador Full-Stack PHP',
         place: 'Solbyte',
         body: 'Más de 8 proyectos de cliente con plazos de agencia: reservas a medida, CRM/ERP y herramientas internas. APIs REST propias y de terceros, DNS y Cloudflare.',
@@ -73,6 +78,7 @@ export const es: Dictionary = {
       {
         year: '2026',
         kind: 'work',
+        short: 'Mainjobs',
         title: 'Desarrollador Full-Stack PHP',
         place: 'Mainjobs',
         body: 'Ingesta de datos y capa de IA de un SaaS multi-tenant de licitaciones públicas.',

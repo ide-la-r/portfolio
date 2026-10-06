@@ -5,11 +5,12 @@ import Lenis from 'lenis';
 import { fitScenes } from './fit';
 import { mountScrolly, type Scene } from './scrolly';
 import { heroTimeline } from './chapters/hero';
+import { routeScene } from './chapters/route';
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
 /** One scene per chapter told in steps, keyed by its data-scrolly name. */
-const scenes: Record<string, Scene> = {};
+const scenes: Record<string, Scene> = { route: routeScene };
 
 /**
  * Wires every chapter to the scroll. With reduced motion the scroll scenes still

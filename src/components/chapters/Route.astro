@@ -1,4 +1,6 @@
 ---
+import Scrolly from '../Scrolly.astro';
+import Step from '../Step.astro';
 import { t, type Locale } from '../../i18n';
 
 interface Props {
@@ -8,43 +10,189 @@ interface Props {
 const { locale } = Astro.props;
 const copy = t(locale).route;
 
-// Route profile on an 800 × 300 canvas. Stops are placed by fraction of the path length.
-const profilePath = 'M0 270 C70 266 110 250 160 238 S250 214 300 188 S380 190 420 160 S520 118 560 110 S660 74 700 56 S780 36 800 30';
-const stopAt = [0.02, 0.2, 0.37, 0.52, 0.66, 0.88];
+type Point = readonly [x: number, y: number];
+
+// The career as an elevation profile on an 800 × 300 canvas. Every stop is a vertex
+// of the curve, so its marker can be placed at build time; the bumps in between
+// are scenery.
+const vertices: Point[] = [
+  [0, 270], [40, 262], [95, 255], [140, 236], [180, 226], [230, 222], [275, 204],
+  [320, 196], [365, 198], [410, 170], [450, 160], [500, 146], [540, 132], [580, 120],
+  [625, 104], [665, 72], [710, 62], [760, 52], [800, 40],
+];
+const stopVertices = [1, 4, 7, 10, 13, 16] as const;
+
+/** Catmull-Rom spline through every vertex, written as cubic Béziers. */
+function smoothPath(points: Point[]): string {
+  const round = (n: number) => Math.round(n * 10) / 10;
+  let d = `M${points[0][0]} ${points[0][1]}`;
+  for (let i = 0; i < points.length - 1; i++) {
+    const p0 = points[i - 1] ?? points[i];
+    const p1 = points[i];
+    const p2 = points[i + 1];
+    const p3 = points[i + 2] ?? p2;
+    const c1 = [p1[0] + (p2[0] - p0[0]) / 6, p1[1] + (p2[1] - p0[1]) / 6];
+    const c2 = [p2[0] - (p3[0] - p1[0]) / 6, p2[1] - (p3[1] - p1[1]) / 6];
+    d += ` C${round(c1[0])} ${round(c1[1])} ${round(c2[0])} ${round(c2[1])} ${p2[0]} ${p2[1]}`;
+  }
+  return d;
+}
+
+const profile = smoothPath(vertices);
+const area = `${profile} L800 300 L0 300 Z`;
+
+// Altitude is part of the metaphor: the last stop sits at 1140 m, the climb from
+// Málaga to Granada that the side project later draws on the phone.
+const base = vertices[0][1];
+const summit = vertices[stopVertices[stopVertices.length - 1]][1];
+const altitudeAt = (y: number) => Math.round((((base - y) / (base - summit)) * 1140) / 10) * 10;
+
+const stops = copy.stops.map((stop, i) => {
+  const [x, y] = vertices[stopVertices[i]];
+  return { ...stop, x, y, left: `${x / 8}%`, top: `${y / 3}%`, altitude: altitudeAt(y) };
+});
+const last = stops[stops.length - 1];
 ---
 
-<section id="trayectoria" data-route class="relative py-28 md:py-40">
-  <div class="container-page">
-    <p class="eyebrow" data-reveal>{copy.eyebrow}</p>
-    <h2 class="mt-4 max-w-[18ch] text-4xl font-semibold tracking-[-0.03em] md:text-6xl" data-reveal>{copy.title}</h2>
-    <p class="mt-5 max-w-[56ch] text-lg text-muted" data-reveal>{copy.intro}</p>
+<Scrolly id="trayectoria" scene="route" stepHeight="44svh">
+  <div slot="visual" class="w-full max-w-3xl px-5 md:px-8 lg:px-0" aria-hidden="true">
+    <div class="mb-8 flex items-end justify-between gap-6" data-route-readout>
+      <p class="text-[clamp(3.5rem,9vw,7.5rem)] leading-[0.85] font-semibold tracking-[-0.05em] tabular-nums">
+        <span data-route-year>{last.year}</span>
+      </p>
+      <p class="eyebrow pb-1 text-right">
+        {copy.climb}
+        <span class="mt-1 block font-sans text-2xl font-medium tracking-tight text-fg normal-case tabular-nums">
+          <span data-route-alt>{last.altitude}</span> m
+        </span>
+      </p>
+    </div>
 
-    <figure class="relative mt-16 aspect-[8/3] w-full" data-route-chart data-stops={JSON.stringify(stopAt)} aria-hidden="true">
+    <div class="route-chart relative w-full" data-route-chart>
       <svg viewBox="0 0 800 300" preserveAspectRatio="none" class="absolute inset-0 h-full w-full overflow-visible">
+        <defs>
+          <clipPath id="route-progress">
+            <rect data-route-clip x="-20" y="-20" width="840" height="340"></rect>
+          </clipPath>
+        </defs>
         <g class="stroke-line" stroke-dasharray="3 6">
-          <line x1="0" y1="75" x2="800" y2="75" vector-effect="non-scaling-stroke" />
-          <line x1="0" y1="150" x2="800" y2="150" vector-effect="non-scaling-stroke" />
-          <line x1="0" y1="225" x2="800" y2="225" vector-effect="non-scaling-stroke" />
+          {[75, 150, 225].map((y) => <line x1="0" y1={y} x2="800" y2={y} vector-effect="non-scaling-stroke" />)}
         </g>
-        <path d={`${profilePath} L800 300 L0 300 Z`} class="fill-warm/[0.07]" />
-        <path d={profilePath} class="fill-none stroke-line" stroke-width="2" vector-effect="non-scaling-stroke" />
-        <path data-route-line d={profilePath} class="fill-none stroke-warm" stroke-width="2.5" stroke-linecap="round" vector-effect="non-scaling-stroke" />
+        <path d={profile} class="fill-none stroke-line" stroke-width="2" vector-effect="non-scaling-stroke"></path>
+        <g clip-path="url(#route-progress)">
+          <path d={area} class="fill-warm/10"></path>
+          <path
+            data-route-path
+            d={profile}
+            class="fill-none stroke-warm"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            vector-effect="non-scaling-stroke"
+          ></path>
+        </g>
       </svg>
-    </figure>
 
-    <ol class="mt-14 grid gap-x-10 gap-y-10 md:grid-cols-2 lg:grid-cols-3">
       {
-        copy.stops.map((stop) => (
-          <li class="min-w-0 border-t border-line pt-5" data-reveal data-route-stop>
-            <div class="flex items-baseline justify-between gap-4">
-              <span class="font-mono text-2xl font-medium text-warm tabular-nums">{stop.year}</span>
-              <span class="eyebrow">{stop.place}</span>
-            </div>
-            <h3 class="mt-3 text-lg font-semibold tracking-tight">{stop.title}</h3>
-            <p class="mt-2 text-muted">{stop.body}</p>
-          </li>
+        stops.map((stop) => (
+          <>
+            <span class="route-guide" style={`left:${stop.left};top:${stop.top}`} />
+            <span
+              class="route-mark is-passed"
+              data-route-mark
+              data-x={stop.x}
+              data-year={stop.year}
+              data-alt={stop.altitude}
+              style={`left:${stop.left};top:${stop.top}`}
+            />
+            <span class="route-label" data-route-label style={`left:${stop.left}`}>
+              {stop.short}
+            </span>
+          </>
         ))
       }
-    </ol>
+      <span class="route-dot" data-route-dot style={`left:${last.left};top:${last.top}`}></span>
+    </div>
   </div>
-</section>
+
+  <Step name="intro">
+    <p class="eyebrow">{copy.eyebrow}</p>
+    <h2 class="mt-4 text-4xl font-semibold tracking-[-0.03em] md:text-6xl">{copy.title}</h2>
+    <p class="mt-5 text-lg text-muted">{copy.intro}</p>
+  </Step>
+
+  {
+    stops.map((stop) => (
+      <Step name="stop">
+        <p class="flex items-baseline gap-3">
+          <span class="font-mono text-lg font-medium text-warm tabular-nums">{stop.year}</span>
+          <span class="eyebrow">{stop.place}</span>
+        </p>
+        <h3 class="mt-3 text-2xl font-semibold tracking-tight md:text-3xl">{stop.title}</h3>
+        <p class="mt-3 text-lg text-muted">{stop.body}</p>
+      </Step>
+    ))
+  }
+</Scrolly>
+
+<style>
+  .route-chart {
+    aspect-ratio: 4 / 3;
+    margin-bottom: 2.25rem;
+  }
+  @media (width >= 40rem) {
+    .route-chart {
+      aspect-ratio: 8 / 3;
+    }
+  }
+
+  .route-guide {
+    position: absolute;
+    bottom: 0;
+    border-left: 1px dashed var(--color-line);
+  }
+
+  .route-mark {
+    position: absolute;
+    width: 0.75rem;
+    height: 0.75rem;
+    translate: -50% -50%;
+    border-radius: 9999px;
+    border: 2px solid var(--color-off);
+    background: var(--color-ink);
+    transition:
+      background-color 0.3s ease,
+      border-color 0.3s ease;
+  }
+  .route-mark.is-passed {
+    border-color: var(--color-warm);
+    background: var(--color-warm);
+  }
+
+  .route-label {
+    position: absolute;
+    top: calc(100% + 0.75rem);
+    translate: -50% 0;
+    display: none;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    white-space: nowrap;
+    color: var(--color-muted);
+  }
+  @media (width >= 40rem) {
+    .route-label {
+      display: block;
+    }
+  }
+
+  .route-dot {
+    position: absolute;
+    width: 1.1rem;
+    height: 1.1rem;
+    translate: -50% -50%;
+    border-radius: 9999px;
+    background: var(--color-warm);
+    box-shadow:
+      0 0 0 7px color-mix(in srgb, var(--color-warm) 22%, transparent),
+      0 0 32px var(--color-warm);
+  }
+</style>

@@ -1,9 +1,14 @@
 export const locales = ['es', 'en'] as const;
 export type Locale = (typeof locales)[number];
 
+/** A fixed-length list: the scroll scenes draw one element per entry. */
+type Tuple<T, N extends number, Acc extends T[] = []> = Acc['length'] extends N ? Acc : Tuple<T, N, [...Acc, T]>;
+
 export interface RouteStop {
   year: string;
   kind: 'study' | 'work';
+  /** Label under the stop's marker on the route chart. */
+  short: string;
   title: string;
   place: string;
   body: string;
@@ -41,7 +46,15 @@ export interface Dictionary {
     scroll: string;
     photoAlt: string;
   };
-  route: { eyebrow: string; title: string; intro: string; climb: string; stops: RouteStop[] };
+  route: {
+    eyebrow: string;
+    title: string;
+    intro: string;
+    /** Label of the altitude readout above the chart. */
+    climb: string;
+    /** Six stops, one per vertex of the route profile drawn in Route.astro. */
+    stops: Tuple<RouteStop, 6>;
+  };
   work: {
     eyebrow: string;
     company: string;
