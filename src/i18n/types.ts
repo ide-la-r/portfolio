@@ -61,10 +61,24 @@ export interface Dictionary {
     period: string;
     title: string;
     context: string;
-    steps: { label: string; title: string; body: string }[];
-    latency: { label: string; caption: string };
+    /** Ingestion, AI layer, product, performance: the four states of the card. */
+    steps: Tuple<{ label: string; title: string; body: string }, 4>;
+    latency: { label: string };
     /** The sample record that travels through ingestion, already clean. */
     card: { label: string; value: string }[];
+    machine: {
+      trying: string;
+      skip: string;
+      resolves: string;
+      standby: string;
+      request: string;
+      requestDone: string;
+      job: string;
+      queued: string;
+      running: string;
+      done: string;
+      rows: Tuple<{ title: string; score: string }, 2>;
+    };
     sample: string;
   };
   how: { eyebrow: string; title: string; intro: string; terminal: TerminalLine[]; points: { title: string; body: string }[] };

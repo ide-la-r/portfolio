@@ -113,7 +113,7 @@ export const en: Dictionary = {
         body: 'I restructured the ordering and pagination path of the main tender listing query.',
       },
     ],
-    latency: { label: 'main listing query', caption: 'before and after' },
+    latency: { label: 'main listing query' },
     card: [
       { label: 'Title', value: 'Public lighting maintenance' },
       { label: 'Body', value: 'Ayuntamiento de Málaga' },
@@ -121,6 +121,22 @@ export const en: Dictionary = {
       { label: 'Amount', value: '€1,240,000.00' },
       { label: 'CPV', value: '50232100' },
     ],
+    machine: {
+      trying: 'trying…',
+      skip: 'no key → next',
+      resolves: 'resolves',
+      standby: 'on standby',
+      request: 'Request',
+      requestDone: 'answered · 41 ms',
+      job: 'Proposal draft',
+      queued: 'queued',
+      running: 'generating…',
+      done: 'ready ✓',
+      rows: [
+        { title: 'Electric vehicle supply · Seville', score: '74' },
+        { title: 'Document management platform · Bilbao', score: '69' },
+      ],
+    },
     sample: 'Sample data',
   },
   how: {

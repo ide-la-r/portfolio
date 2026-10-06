@@ -1,4 +1,6 @@
 ---
+import Scrolly from '../Scrolly.astro';
+import Step from '../Step.astro';
 import { t, type Locale } from '../../i18n';
 
 interface Props {
@@ -7,55 +9,347 @@ interface Props {
 
 const { locale } = Astro.props;
 const copy = t(locale).work;
+const m = copy.machine;
+
+// Monograms, not logos: the providers are named, not branded.
+const providers = [
+  { key: 'openai', name: 'OpenAI', mark: 'OA', x: 70, statuses: [{ key: 'trying', text: m.trying }, { key: 'skip', text: m.skip }] },
+  { key: 'anthropic', name: 'Anthropic', mark: 'AN', x: 220, statuses: [{ key: 'resolves', text: m.resolves }] },
+  { key: 'gemini', name: 'Gemini', mark: 'GE', x: 370, statuses: [{ key: 'standby', text: m.standby }] },
+];
 ---
 
-<section id="mainjobs" data-work class="relative py-28 md:py-40">
-  <div class="container-page">
-    <p class="eyebrow" data-reveal>{copy.eyebrow} · {copy.company} · {copy.period}</p>
-    <h2 class="mt-4 max-w-[20ch] text-4xl font-semibold tracking-[-0.03em] md:text-6xl" data-reveal>{copy.title}</h2>
-    <p class="mt-5 max-w-[60ch] text-lg text-muted" data-reveal>{copy.context}</p>
+<Scrolly id="mainjobs" scene="work" stepHeight="62svh">
+  <!-- The machine is drawn on a 440 × 500 canvas and scaled to fit (scripts/fit.ts). -->
+  <div slot="visual" class="machine" data-fit="440x500" aria-hidden="true">
+    <span class="m-seed" data-seed data-js-only></span>
 
-    <div class="mt-16 grid items-start gap-14 lg:grid-cols-[1fr_1.1fr]">
-      <!-- The card: the record that travels through ingestion, shown here in its final, clean state. -->
-      <div class="lg:sticky lg:top-28" data-reveal>
-        <div class="relative rounded-2xl border border-line bg-panel p-6 shadow-[0_30px_60px_-30px_#000]">
-          <span class="absolute -top-3 right-5 rounded-full bg-signal px-3 py-0.5 font-mono text-xs font-medium text-ink">scoring 82/100</span>
-          <dl class="grid grid-cols-[auto_1fr] gap-x-5 gap-y-2.5 text-[0.95rem]">
-            {
-              copy.card.map((field) => (
-                <>
-                  <dt class="eyebrow pt-0.5">{field.label}</dt>
-                  <dd class="min-w-0 tabular-nums">{field.value}</dd>
-                </>
-              ))
-            }
-          </dl>
-          <p class="mt-5 font-mono text-[0.7rem] text-off">{copy.sample}</p>
-        </div>
+    <svg class="m-wires" viewBox="0 0 440 500" data-js-only>
+      <path data-wire="openai" pathLength="1" d="M220 150 C220 124 70 128 70 102"></path>
+      <path data-wire="anthropic" pathLength="1" d="M220 150 L220 102"></path>
+      <path data-wire="gemini" pathLength="1" d="M220 150 C220 124 370 128 370 102"></path>
+    </svg>
 
-        <div class="mt-8 rounded-2xl border border-line p-6">
-          <p class="eyebrow">{copy.latency.label}</p>
-          <p class="mt-3 flex items-baseline gap-4 font-semibold tracking-[-0.04em]">
-            <span class="text-2xl text-off line-through decoration-off/60">340 ms</span>
-            <span class="text-6xl text-fg tabular-nums md:text-7xl">2<span class="ml-1 text-2xl font-medium text-muted">ms</span></span>
-          </p>
-          <div class="mt-4 h-1.5 overflow-hidden rounded-full bg-line"><div class="h-full w-[0.6%] min-w-1 rounded-full bg-signal"></div></div>
+    {
+      providers.map((p) => (
+        <div class="m-node" data-node={p.key} style={`left:${p.x}px`} data-js-only>
+          <span class="m-node-box" data-node-box>
+            {p.mark}
+          </span>
+          <span class="m-node-name">{p.name}</span>
+          <span class="m-node-status">
+            {p.statuses.map((s) => (
+              <span data-status={s.key}>{s.text}</span>
+            ))}
+          </span>
         </div>
+      ))
+    }
+
+    <article class="m-card" data-card>
+      <span class="m-score" data-score>scoring 82/100</span>
+      <div class="m-layers">
+        <pre class="m-raw" data-raw data-js-only>{'{"TITULO":"SERV. MANT. ALUMBRADO PUB.",\n "organo":"AYTO. DE '}<b>MÃ¡LAGA</b>{'",\n "plazo":'}<b>null</b>{',\n "importe":'}<b>"1240000"</b>{',\n "cpv":"50232100"}'}</pre>
+        <dl class="m-clean" data-clean>
+          {
+            copy.card.map((field) => (
+              <>
+                <dt>{field.label}</dt>
+                <dd>{field.value}</dd>
+              </>
+            ))
+          }
+        </dl>
       </div>
+    </article>
 
-      <ol class="grid gap-12">
-        {
-          copy.steps.map((step, i) => (
-            <li class="min-w-0" data-reveal>
-              <p class="font-mono text-xs text-signal">
-                {String(i + 1).padStart(2, '0')} · {step.label}
-              </p>
-              <h3 class="mt-2 text-2xl font-semibold tracking-tight">{step.title}</h3>
-              <p class="mt-3 text-lg leading-relaxed text-muted">{step.body}</p>
-            </li>
-          ))
-        }
-      </ol>
+    <div class="m-job" data-job data-js-only>
+      <div class="m-job-row">
+        <span>{m.request}</span>
+        <span class="text-ok">{m.requestDone}</span>
+      </div>
+      <div class="m-job-row">
+        <span>{m.job}</span>
+        <span class="m-stack">
+          <span data-job-status="queued">{m.queued}</span>
+          <span data-job-status="running">{m.running}</span>
+          <span data-job-status="done" class="text-ok">{m.done}</span>
+        </span>
+      </div>
+      <div class="m-track"><i data-job-bar></i></div>
     </div>
+
+    <div class="m-list" data-list data-js-only>
+      {
+        m.rows.map((row) => (
+          <div class="m-row">
+            <span>{row.title}</span>
+            <span>{row.score}</span>
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="m-meter" data-meter>
+      <p class="eyebrow">{copy.latency.label}</p>
+      <p class="m-ms"><span data-ms>2</span><small>ms</small></p>
+      <div class="m-track"><i data-bar></i></div>
+    </div>
+
+    <p class="m-sample">{copy.sample}</p>
   </div>
-</section>
+
+  <Step name="intro">
+    <p class="eyebrow">{copy.eyebrow} · {copy.company} · {copy.period}</p>
+    <h2 class="mt-4 text-4xl font-semibold tracking-[-0.03em] md:text-6xl">{copy.title}</h2>
+    <p class="mt-5 text-lg text-muted">{copy.context}</p>
+  </Step>
+
+  {
+    copy.steps.map((step, i) => (
+      <Step name="step">
+        <p class="font-mono text-xs text-signal">
+          {String(i + 1).padStart(2, '0')} · {step.label}
+        </p>
+        <h3 class="mt-3 text-2xl font-semibold tracking-tight md:text-3xl">{step.title}</h3>
+        <p class="mt-3 text-lg leading-relaxed text-muted">{step.body}</p>
+      </Step>
+    ))
+  }
+</Scrolly>
+
+<style>
+  .machine {
+    width: 440px;
+    height: 500px;
+    font-size: 15px;
+  }
+  .machine > * {
+    position: absolute;
+  }
+
+  .m-seed {
+    left: 220px;
+    top: 236px;
+    width: 18px;
+    height: 18px;
+    translate: -50% -50%;
+    border-radius: 9999px;
+    background: var(--color-warm);
+    box-shadow: 0 0 32px var(--color-warm);
+  }
+
+  .m-wires {
+    inset: 0;
+    width: 440px;
+    height: 500px;
+    overflow: visible;
+  }
+  .m-wires path {
+    fill: none;
+    stroke: var(--color-signal);
+    stroke-width: 1.5;
+    stroke-dasharray: 1;
+  }
+  .m-wires [data-wire='gemini'] {
+    stroke: var(--color-off);
+  }
+
+  .m-node {
+    top: 0;
+    width: 150px;
+    translate: -50% 0;
+    display: grid;
+    justify-items: center;
+    gap: 4px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+  }
+  .m-node-box {
+    display: grid;
+    place-items: center;
+    width: 46px;
+    height: 46px;
+    border-radius: 13px;
+    border: 1px solid var(--color-line);
+    background: var(--color-panel);
+    color: var(--color-fg);
+    font-size: 13px;
+  }
+  .m-node-status,
+  .m-stack {
+    display: grid;
+  }
+  .m-node-status > *,
+  .m-stack > * {
+    grid-area: 1 / 1;
+  }
+  .m-node-status {
+    min-height: 1.3em;
+    white-space: nowrap;
+    font-size: 11px;
+    color: var(--color-muted);
+  }
+  [data-status='skip'] {
+    color: var(--color-warm);
+  }
+  [data-status='resolves'] {
+    color: var(--color-signal);
+  }
+
+  .m-card {
+    left: 30px;
+    top: 150px;
+    width: 380px;
+    padding: 18px 18px 20px;
+    border: 1px solid var(--color-line);
+    border-radius: 16px;
+    background: var(--color-panel);
+    box-shadow: 0 30px 60px -30px #000;
+  }
+  .m-layers {
+    display: grid;
+  }
+  .m-layers > * {
+    grid-area: 1 / 1;
+    min-width: 0;
+  }
+  .m-raw {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    color: var(--color-muted);
+  }
+  .m-raw b {
+    font-weight: 400;
+    color: var(--color-warm);
+  }
+  .m-clean {
+    margin: 0;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 7px 16px;
+    align-content: start;
+  }
+  .m-clean dt {
+    padding-top: 2px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
+  .m-clean dd {
+    margin: 0;
+    font-variant-numeric: tabular-nums;
+  }
+  .m-score {
+    position: absolute;
+    top: -12px;
+    right: 16px;
+    padding: 3px 10px;
+    border-radius: 9999px;
+    background: var(--color-signal);
+    color: var(--color-ink);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  .m-job {
+    left: 30px;
+    top: 350px;
+    width: 380px;
+    display: grid;
+    gap: 10px;
+    padding: 14px 16px;
+    border: 1px solid var(--color-line);
+    border-radius: 14px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+  }
+  .m-job-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    color: var(--color-muted);
+  }
+  .m-track {
+    height: 5px;
+    overflow: hidden;
+    border-radius: 3px;
+    background: var(--color-line);
+  }
+  .m-track i {
+    display: block;
+    height: 100%;
+    border-radius: 3px;
+    background: var(--color-signal);
+    transform-origin: left center;
+  }
+
+  .m-list {
+    left: 30px;
+    top: 196px;
+    width: 380px;
+    display: grid;
+    gap: 8px;
+  }
+  .m-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 10px 14px;
+    border: 1px solid var(--color-line);
+    border-radius: 11px;
+    background: var(--color-panel);
+    font-size: 13px;
+    color: var(--color-muted);
+  }
+  .m-row span:first-child {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .m-row span:last-child {
+    font-family: var(--font-mono);
+    color: var(--color-fg);
+  }
+
+  .m-meter {
+    left: 30px;
+    top: 330px;
+    width: 380px;
+  }
+  .m-ms {
+    margin: 8px 0 12px;
+    font-size: 64px;
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: -0.045em;
+    font-variant-numeric: tabular-nums;
+  }
+  /* Final state for a page without scripts: the bar already at 2 of 340 */
+  .m-meter [data-bar] {
+    transform: scaleX(0.006);
+  }
+  .m-ms small {
+    margin-left: 8px;
+    font-size: 22px;
+    font-weight: 500;
+    letter-spacing: 0;
+    color: var(--color-muted);
+  }
+
+  .m-sample {
+    right: 0;
+    bottom: 0;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.04em;
+    color: var(--color-off);
+  }
+</style>

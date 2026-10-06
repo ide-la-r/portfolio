@@ -6,11 +6,12 @@ import { fitScenes } from './fit';
 import { mountScrolly, type Scene } from './scrolly';
 import { heroTimeline } from './chapters/hero';
 import { routeScene } from './chapters/route';
+import { workScene } from './chapters/work';
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
 /** One scene per chapter told in steps, keyed by its data-scrolly name. */
-const scenes: Record<string, Scene> = { route: routeScene };
+const scenes: Record<string, Scene> = { route: routeScene, work: workScene };
 
 /**
  * Wires every chapter to the scroll. With reduced motion the scroll scenes still

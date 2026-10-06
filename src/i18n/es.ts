@@ -113,7 +113,7 @@ export const es: Dictionary = {
         body: 'Reestructuré el orden y la paginación de la consulta principal del listado de licitaciones.',
       },
     ],
-    latency: { label: 'consulta principal del listado', caption: 'antes y después' },
+    latency: { label: 'consulta principal del listado' },
     card: [
       { label: 'Título', value: 'Mantenimiento del alumbrado público' },
       { label: 'Organismo', value: 'Ayuntamiento de Málaga' },
@@ -121,6 +121,22 @@ export const es: Dictionary = {
       { label: 'Importe', value: '1.240.000,00 €' },
       { label: 'CPV', value: '50232100' },
     ],
+    machine: {
+      trying: 'probando…',
+      skip: 'sin clave → siguiente',
+      resolves: 'resuelve',
+      standby: 'en reserva',
+      request: 'Petición',
+      requestDone: 'respondida · 41 ms',
+      job: 'Memoria técnica',
+      queued: 'en cola',
+      running: 'generando…',
+      done: 'lista ✓',
+      rows: [
+        { title: 'Suministro de vehículos eléctricos · Sevilla', score: '74' },
+        { title: 'Plataforma de gestión documental · Bilbao', score: '69' },
+      ],
+    },
     sample: 'Datos de ejemplo',
   },
   how: {
