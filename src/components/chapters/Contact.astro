@@ -1,4 +1,6 @@
 ---
+import { Image } from 'astro:assets';
+import avatar from '../../assets/avatar.jpg';
 import { profile, t, type Locale } from '../../i18n';
 
 interface Props {
@@ -11,7 +13,18 @@ const copy = t(locale);
 
 <section id="contacto" class="relative py-28 md:py-40">
   <div class="container-page">
-    <p class="eyebrow" data-reveal>{copy.contact.eyebrow}</p>
+    <!-- The real face, at the moment someone decides whether to write -->
+    <div class="flex items-center gap-4" data-reveal>
+      <Image
+        src={avatar}
+        alt={profile.shortName}
+        width={80}
+        height={80}
+        densities={[1, 2]}
+        class="size-16 rounded-full object-cover ring-1 ring-line md:size-20"
+      />
+      <p class="eyebrow">{copy.contact.eyebrow}</p>
+    </div>
     <h2 class="mt-4 text-[clamp(3rem,9vw,7rem)] leading-[0.95] font-semibold tracking-[-0.045em]" data-reveal>{copy.contact.title}</h2>
     <p class="mt-6 max-w-[52ch] text-lg text-muted" data-reveal>{copy.contact.body}</p>
 
