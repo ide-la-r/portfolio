@@ -25,3 +25,6 @@ pnpm-debug.log*
 
 # local tooling
 .claude/
+
+# wrangler (Cloudflare CLI) local state
+.wrangler/

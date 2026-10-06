@@ -10,7 +10,8 @@
     "build": "astro check && astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "check": "astro check"
+    "check": "astro check",
+    "deploy": "npm run build && npx --yes wrangler@4 pages deploy dist --project-name ismaeldelarosa --branch main"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",
