@@ -1,0 +1,246 @@
+import type { Dictionary } from './types';
+
+export const es: Dictionary = {
+  meta: {
+    title: 'Ismael de la Rosa · Desarrollador Full-Stack (PHP, Laravel, Python)',
+    description:
+      'Desarrollador full-stack orientado a backend en Málaga. Ingesta de datos, colas, APIs REST y funcionalidades con IA sobre un SaaS Laravel en producción.',
+    ogLocale: 'es_ES',
+  },
+  nav: {
+    label: 'Secciones',
+    route: 'Trayectoria',
+    work: 'Mainjobs',
+    how: 'Cómo trabajo',
+    project: 'Proyecto',
+    stack: 'Stack',
+    contact: 'Contacto',
+    cv: 'CV',
+    cvFile: '/cv/CV-Ismael-de-la-Rosa-2026-ES.pdf',
+    switchLabel: 'Read in English',
+    skip: 'Saltar al contenido',
+  },
+  hero: {
+    role: 'Desarrollador full-stack orientado a backend',
+    summary:
+      'Llevo la ingesta de datos y la capa de IA de una plataforma de licitaciones públicas en producción. Mi trabajo se mide en disponibilidad, latencia y coste de API por petición.',
+    location: 'Málaga · disponible en Málaga y en remoto',
+    statLabel: 'la consulta principal del listado',
+    scroll: 'Baja para ver la ruta',
+    photoAlt: 'Ismael de la Rosa',
+  },
+  route: {
+    eyebrow: 'Trayectoria',
+    title: 'Cinco años de subida constante',
+    intro: 'De montar redes a llevar la ingesta de un SaaS en producción. Cada parada es un escalón.',
+    climb: 'desnivel acumulado',
+    stops: [
+      {
+        year: '2021',
+        kind: 'study',
+        title: 'Técnico en Sistemas Microinformáticos y Redes',
+        place: 'IES Gerald Brenan',
+        body: 'Redes, sistemas y hardware. Aquí empieza la ruta.',
+      },
+      {
+        year: '2023',
+        kind: 'study',
+        title: 'Técnico Superior en Desarrollo de Aplicaciones Web',
+        place: 'MEDAC Nova, Málaga',
+        body: 'Grado Superior de FP, nivel 5 MEC.',
+      },
+      {
+        year: '2024',
+        kind: 'study',
+        title: '42 Málaga',
+        place: 'Fundación Telefónica',
+        body: 'Inmersión selectiva a jornada completa en C y Unix, aprendiendo entre pares.',
+      },
+      {
+        year: '2025',
+        kind: 'work',
+        title: 'Desarrollador web (prácticas)',
+        place: 'Patrimar Inversiones',
+        body: 'La plataforma web de la empresa en PHP y JavaScript, en un equipo de dos.',
+      },
+      {
+        year: '2025',
+        kind: 'work',
+        title: 'Desarrollador Full-Stack PHP',
+        place: 'Solbyte',
+        body: 'Más de 8 proyectos de cliente con plazos de agencia: reservas a medida, CRM/ERP y herramientas internas. APIs REST propias y de terceros, DNS y Cloudflare.',
+      },
+      {
+        year: '2026',
+        kind: 'work',
+        title: 'Desarrollador Full-Stack PHP',
+        place: 'Mainjobs',
+        body: 'Ingesta de datos y capa de IA de un SaaS multi-tenant de licitaciones públicas.',
+      },
+    ],
+  },
+  work: {
+    eyebrow: 'Ahora',
+    company: 'Mainjobs',
+    period: 'Mayo 2026 – actualidad',
+    title: 'Un dato crudo, de la fuente al cliente',
+    context: 'SaaS multi-tenant de seguimiento de licitaciones públicas · Laravel 12, Filament, MySQL, colas con Redis, Forge.',
+    steps: [
+      {
+        label: 'Ingesta',
+        title: 'Seis fuentes públicas, una sola forma',
+        body: 'Fuentes autonómicas y europeas, con descarga de adjuntos tras captchas y proxies rotatorios. Corregí fallos de plazos y de localización que dejaban miles de licitaciones invisibles en las búsquedas de los clientes.',
+      },
+      {
+        label: 'Capa de IA',
+        title: 'El proveedor se elige por servicio',
+        body: 'Un registro versionado resuelve proveedor y modelo entre OpenAI, Anthropic y Gemini, con reserva automática si falta una credencial, coste por modelo y avisos por umbral. Sustituyó una configuración en la que una variable ausente ejecutaba en silencio el modelo más caro, a unas 10 veces el coste.',
+      },
+      {
+        label: 'Producto',
+        title: 'IA dentro de la ficha, sin bloquear nada',
+        body: 'Un generador de memorias con fuentes de conocimiento por empresa, cupos según el plan y generación en cola: un trabajo largo nunca bloquea una petición. Los módulos grandes salen tras banderas de funcionalidad, por partes.',
+      },
+      {
+        label: 'Rendimiento',
+        title: 'La pantalla más usada, 170 veces más rápida',
+        body: 'Reestructuré el orden y la paginación de la consulta principal del listado de licitaciones.',
+      },
+    ],
+    latency: { label: 'consulta principal del listado', caption: 'antes y después' },
+    card: [
+      { label: 'Título', value: 'Mantenimiento del alumbrado público' },
+      { label: 'Organismo', value: 'Ayuntamiento de Málaga' },
+      { label: 'Plazo', value: '14 oct 2026 · 14:00' },
+      { label: 'Importe', value: '1.240.000,00 €' },
+      { label: 'CPV', value: '50232100' },
+    ],
+    sample: 'Datos de ejemplo',
+  },
+  how: {
+    eyebrow: 'Cómo trabajo',
+    title: 'Agentes de programación, con la exigencia de una pull request',
+    intro:
+      'Trabajo a diario con Claude Code y Codex. Lo que producen pasa por lo mismo que cualquier otro código: tests, análisis estático y revisión. Y se revierte cuando está mal.',
+    terminal: [
+      { kind: 'cmd', text: '$ php artisan test --filter=ListingQuery' },
+      { kind: 'ok', text: '  PASS  Tests\\Feature\\ListingQueryTest' },
+      { kind: 'ok', text: '  ✓ ordena por fecha sin recorrer la tabla    2 ms' },
+      { kind: 'cmd', text: '$ ./vendor/bin/phpstan analyse' },
+      { kind: 'ok', text: '  [OK] No errors' },
+      { kind: 'cmd', text: '$ git push origin master' },
+      { kind: 'dim', text: '  desplegado · 28 s' },
+    ],
+    points: [
+      {
+        title: 'Un test que no has visto fallar no prueba nada',
+        body: 'Antes de dar un arreglo por bueno, lo deshago y compruebo que el test se pone en rojo.',
+      },
+      {
+        title: 'Análisis estático a cero',
+        body: 'Larastan caza clases y métodos que no existen antes de que lleguen a producción.',
+      },
+      {
+        title: 'Despliegue por partes',
+        body: 'Banderas de funcionalidad para publicar módulos grandes sin esperar a tenerlo todo.',
+      },
+      {
+        title: 'La capa ingrata',
+        body: 'Codificación rota en PDF extraídos, paginación y zonas horarias: lo que nadie ve hasta que falla.',
+      },
+    ],
+  },
+  project: {
+    eyebrow: 'Proyecto propio',
+    name: 'Libro de Trayectos',
+    tagline: 'Lo que cuesta de verdad un viaje en coche, repartido entre quienes van dentro.',
+    body: [
+      'Calcula el coste real de cada trayecto, incluido el efecto del desnivel y el límite de lo que la batería de un híbrido puede recuperar en una bajada.',
+      'Lo reparte con contabilidad por partida doble: cada viaje es un asiento cuyas líneas suman cero, garantizado por un trigger diferido de PostgreSQL. Ningún script puede descuadrar el libro, y todo el dinero va en céntimos enteros.',
+      'Distancia y desnivel reales desde OpenRouteService, con degradación por escalones cuando se agota la cuota gratuita, y precios oficiales del Ministerio.',
+    ],
+    facts: [
+      { label: 'Stack', value: 'Laravel · PostgreSQL · PWA' },
+      { label: 'Infraestructura', value: 'Docker en Render · Postgres en Neon' },
+      { label: 'Tareas', value: 'GitHub Actions' },
+      { label: 'Coste', value: '0 € al mes' },
+    ],
+    ledger: {
+      title: 'Libro de Trayectos',
+      route: 'Málaga → Granada',
+      meta: '128 km · ↑ 1.140 m',
+      costLabel: 'coste real',
+      cost: '14,82 €',
+      entry: 'asiento nº 213 · partida doble',
+      lines: [
+        { who: 'Ismael (conductor)', amount: '+9,88' },
+        { who: 'Ana', amount: '−4,94' },
+        { who: 'Luis', amount: '−4,94' },
+      ],
+    },
+    live: 'Abrir la app',
+    code: 'Ver el código',
+  },
+  stack: {
+    eyebrow: 'Stack',
+    title: 'Con qué trabajo',
+    groups: [
+      { name: 'Lenguajes', items: ['PHP 8', 'JavaScript', 'Python', 'SQL'] },
+      {
+        name: 'Backend',
+        items: ['Laravel', 'Filament', 'APIs REST', 'Colas y tareas programadas', 'MySQL', 'PostgreSQL', 'Redis', 'PHPUnit / Pest'],
+      },
+      { name: 'Frontend', items: ['Blade', 'Livewire', 'Tailwind CSS', 'HTML', 'Sass'] },
+      {
+        name: 'Plataforma',
+        items: ['Git', 'Linux', 'Bash', 'Docker', 'Laravel Forge', 'Render', 'Cloudflare / DNS', 'GitHub Actions', 'WordPress'],
+      },
+      {
+        name: 'Ingeniería de IA',
+        items: ['OpenAI', 'Anthropic', 'Gemini', 'Diseño de prompts', 'Control de coste', 'Agentes de programación'],
+      },
+      { name: 'Aprendiendo', items: ['Pandas', 'C', 'Java'] },
+    ],
+  },
+  education: {
+    eyebrow: 'Formación',
+    title: 'De dónde sale todo esto',
+    items: [
+      {
+        title: 'Técnico Superior en Desarrollo de Aplicaciones Web',
+        place: 'MEDAC Nova, Málaga',
+        years: '2023 – 2025',
+        note: 'Grado Superior de FP, nivel 5 MEC.',
+      },
+      {
+        title: '42 Málaga',
+        place: 'Fundación Telefónica',
+        years: '2024 – 2026',
+        note: 'Inmersión selectiva a jornada completa en C y Unix (Piscine) y primeros proyectos del cursus entre pares.',
+      },
+      {
+        title: 'Especialización en desarrollo con Python',
+        place: 'CPIFP Alan Turing',
+        years: '2025 – 2026',
+        note: 'Desarrollo de aplicaciones en Python.',
+      },
+      {
+        title: 'Técnico en Sistemas Microinformáticos y Redes',
+        place: 'IES Gerald Brenan',
+        years: '2021 – 2023',
+        note: 'Redes, sistemas y hardware.',
+      },
+    ],
+    also: ['Cisco Python Essentials 2', 'Cisco CCNAv7', 'Cisco IT Essentials'],
+    languages: 'Español nativo · Inglés B2 (Trinity), de uso diario en documentación técnica y revisión de código.',
+  },
+  contact: {
+    eyebrow: 'Contacto',
+    title: '¿Hablamos?',
+    body: 'Disponible para trabajar en Málaga y en remoto. Escríbeme por correo o por LinkedIn.',
+    copy: 'Copiar correo',
+    copied: 'Copiado',
+    cv: 'Descargar CV (PDF)',
+    footer: 'Hecho con Astro, GSAP y Tailwind CSS.',
+  },
+};

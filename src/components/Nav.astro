@@ -1,0 +1,46 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import { otherLocale, profile, t, type Locale } from '../i18n';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const copy = t(locale);
+const other = otherLocale(locale);
+
+const links = [
+  { href: '#trayectoria', label: copy.nav.route },
+  { href: '#mainjobs', label: copy.nav.work },
+  { href: '#como-trabajo', label: copy.nav.how },
+  { href: '#proyecto', label: copy.nav.project },
+  { href: '#stack', label: copy.nav.stack },
+  { href: '#contacto', label: copy.nav.contact },
+];
+---
+
+<header class="fixed inset-x-0 top-0 z-40 border-b border-line/60 bg-ink/70 pt-[env(safe-area-inset-top)] backdrop-blur-xl">
+  <div class="container-page flex h-14 items-center justify-between gap-4">
+    <a href={getRelativeLocaleUrl(locale, '')} class="text-sm font-semibold tracking-tight">{profile.shortName}</a>
+    <nav aria-label={copy.nav.label} class="hidden lg:block">
+      <ul class="flex gap-6 text-sm text-muted">
+        {links.map((l) => <li><a href={l.href} class="transition-colors hover:text-fg">{l.label}</a></li>)}
+      </ul>
+    </nav>
+    <div class="flex items-center gap-2 text-sm">
+      <a
+        href={getRelativeLocaleUrl(other, '')}
+        hreflang={other}
+        lang={other}
+        class="rounded-full px-3 py-1.5 font-mono text-xs uppercase text-muted transition-colors hover:text-fg"
+        aria-label={copy.nav.switchLabel}
+      >
+        {other}
+      </a>
+      <a href={copy.nav.cvFile} download class="rounded-full bg-fg px-4 py-1.5 font-medium text-ink transition-opacity hover:opacity-85">
+        {copy.nav.cv}
+      </a>
+    </div>
+  </div>
+</header>

@@ -1,0 +1,50 @@
+---
+import { t, type Locale } from '../../i18n';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const copy = t(locale).route;
+
+// Route profile on an 800 × 300 canvas. Stops are placed by fraction of the path length.
+const profilePath = 'M0 270 C70 266 110 250 160 238 S250 214 300 188 S380 190 420 160 S520 118 560 110 S660 74 700 56 S780 36 800 30';
+const stopAt = [0.02, 0.2, 0.37, 0.52, 0.66, 0.88];
+---
+
+<section id="trayectoria" data-route class="relative py-28 md:py-40">
+  <div class="container-page">
+    <p class="eyebrow" data-reveal>{copy.eyebrow}</p>
+    <h2 class="mt-4 max-w-[18ch] text-4xl font-semibold tracking-[-0.03em] md:text-6xl" data-reveal>{copy.title}</h2>
+    <p class="mt-5 max-w-[56ch] text-lg text-muted" data-reveal>{copy.intro}</p>
+
+    <figure class="relative mt-16 aspect-[8/3] w-full" data-route-chart data-stops={JSON.stringify(stopAt)} aria-hidden="true">
+      <svg viewBox="0 0 800 300" preserveAspectRatio="none" class="absolute inset-0 h-full w-full overflow-visible">
+        <g class="stroke-line" stroke-dasharray="3 6">
+          <line x1="0" y1="75" x2="800" y2="75" vector-effect="non-scaling-stroke" />
+          <line x1="0" y1="150" x2="800" y2="150" vector-effect="non-scaling-stroke" />
+          <line x1="0" y1="225" x2="800" y2="225" vector-effect="non-scaling-stroke" />
+        </g>
+        <path d={`${profilePath} L800 300 L0 300 Z`} class="fill-warm/[0.07]" />
+        <path d={profilePath} class="fill-none stroke-line" stroke-width="2" vector-effect="non-scaling-stroke" />
+        <path data-route-line d={profilePath} class="fill-none stroke-warm" stroke-width="2.5" stroke-linecap="round" vector-effect="non-scaling-stroke" />
+      </svg>
+    </figure>
+
+    <ol class="mt-14 grid gap-x-10 gap-y-10 md:grid-cols-2 lg:grid-cols-3">
+      {
+        copy.stops.map((stop) => (
+          <li class="min-w-0 border-t border-line pt-5" data-reveal data-route-stop>
+            <div class="flex items-baseline justify-between gap-4">
+              <span class="font-mono text-2xl font-medium text-warm tabular-nums">{stop.year}</span>
+              <span class="eyebrow">{stop.place}</span>
+            </div>
+            <h3 class="mt-3 text-lg font-semibold tracking-tight">{stop.title}</h3>
+            <p class="mt-2 text-muted">{stop.body}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>

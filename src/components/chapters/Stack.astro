@@ -1,0 +1,32 @@
+---
+import { t, type Locale } from '../../i18n';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const copy = t(locale).stack;
+---
+
+<section id="stack" data-stack class="relative py-28 md:py-40">
+  <div class="container-page">
+    <p class="eyebrow" data-reveal>{copy.eyebrow}</p>
+    <h2 class="mt-4 text-4xl font-semibold tracking-[-0.03em] md:text-6xl" data-reveal>{copy.title}</h2>
+
+    <div class="mt-14 grid gap-px overflow-hidden rounded-2xl border border-line bg-line md:grid-cols-2 lg:grid-cols-3">
+      {
+        copy.groups.map((group) => (
+          <div class="min-w-0 bg-ink p-6" data-reveal data-stack-layer>
+            <h3 class="eyebrow">{group.name}</h3>
+            <ul class="mt-4 flex flex-wrap gap-2">
+              {group.items.map((item) => (
+                <li class="rounded-full border border-line bg-panel px-3 py-1 text-sm">{item}</li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

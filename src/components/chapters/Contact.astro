@@ -1,0 +1,60 @@
+---
+import { profile, t, type Locale } from '../../i18n';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const copy = t(locale);
+---
+
+<section id="contacto" class="relative py-28 md:py-40">
+  <div class="container-page">
+    <p class="eyebrow" data-reveal>{copy.contact.eyebrow}</p>
+    <h2 class="mt-4 text-[clamp(3rem,9vw,7rem)] leading-[0.95] font-semibold tracking-[-0.045em]" data-reveal>{copy.contact.title}</h2>
+    <p class="mt-6 max-w-[52ch] text-lg text-muted" data-reveal>{copy.contact.body}</p>
+
+    <div class="mt-12 flex flex-wrap items-center gap-3" data-reveal>
+      <a href={`mailto:${profile.email}`} class="min-w-0 break-all text-xl font-medium underline decoration-line underline-offset-8 transition-colors hover:decoration-signal md:text-2xl">
+        {profile.email}
+      </a>
+      <button
+        type="button"
+        data-copy={profile.email}
+        data-copied-label={copy.contact.copied}
+        class="rounded-full border border-line px-4 py-2 text-sm transition-colors hover:border-muted"
+      >
+        {copy.contact.copy}
+      </button>
+    </div>
+
+    <div class="mt-8 flex flex-wrap gap-3 text-sm" data-reveal>
+      <a href={profile.linkedin} class="rounded-full border border-line px-5 py-2.5 transition-colors hover:border-muted">LinkedIn ↗</a>
+      <a href={profile.github} class="rounded-full border border-line px-5 py-2.5 transition-colors hover:border-muted">GitHub ↗</a>
+      <a href={copy.nav.cvFile} download class="rounded-full bg-fg px-5 py-2.5 font-medium text-ink transition-opacity hover:opacity-85">{copy.contact.cv}</a>
+    </div>
+  </div>
+</section>
+
+<footer class="border-t border-line py-10">
+  <div class="container-page flex flex-wrap justify-between gap-4 font-mono text-xs text-muted">
+    <span>© {new Date().getFullYear()} {profile.name}</span>
+    <span>{copy.contact.footer}</span>
+  </div>
+</footer>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>('[data-copy]').forEach((button) => {
+    const original = button.textContent;
+    button.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(button.dataset.copy ?? '');
+        button.textContent = button.dataset.copiedLabel ?? original;
+        setTimeout(() => (button.textContent = original), 1800);
+      } catch {
+        // Without clipboard access the address is still there to select by hand.
+      }
+    });
+  });
+</script>

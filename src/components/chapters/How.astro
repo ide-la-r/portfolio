@@ -1,0 +1,38 @@
+---
+import { t, type Locale } from '../../i18n';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const copy = t(locale).how;
+
+const tone = { cmd: 'text-fg', ok: 'text-ok', dim: 'text-muted' } as const;
+---
+
+<section id="como-trabajo" data-how class="relative py-28 md:py-40">
+  <div class="container-page">
+    <p class="eyebrow" data-reveal>{copy.eyebrow}</p>
+    <h2 class="mt-4 max-w-[22ch] text-4xl font-semibold tracking-[-0.03em] md:text-6xl" data-reveal>{copy.title}</h2>
+    <p class="mt-5 max-w-[60ch] text-lg text-muted" data-reveal>{copy.intro}</p>
+
+    <div class="mt-16 overflow-hidden rounded-2xl border border-line bg-[#06080d] shadow-[0_40px_80px_-40px_#000]" data-reveal data-terminal>
+      <div class="flex gap-1.5 border-b border-line px-4 py-3" aria-hidden="true">
+        <i class="size-2.5 rounded-full bg-line"></i><i class="size-2.5 rounded-full bg-line"></i><i class="size-2.5 rounded-full bg-line"></i>
+      </div>
+      <pre class="overflow-x-auto px-5 py-5 font-mono text-[0.8rem] leading-7 md:text-sm"><code>{copy.terminal.map((line) => <span class:list={['block', tone[line.kind]]}>{line.text}</span>)}</code></pre>
+    </div>
+
+    <ul class="mt-14 grid gap-x-10 gap-y-10 md:grid-cols-2">
+      {
+        copy.points.map((point) => (
+          <li class="min-w-0 border-t border-line pt-5" data-reveal>
+            <h3 class="text-lg font-semibold tracking-tight">{point.title}</h3>
+            <p class="mt-2 text-muted">{point.body}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>

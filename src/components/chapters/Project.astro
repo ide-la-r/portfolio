@@ -1,0 +1,67 @@
+---
+import { profile, t, type Locale } from '../../i18n';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const copy = t(locale).project;
+const ledger = copy.ledger;
+const zero = locale === 'es' ? '0,00' : '0.00';
+---
+
+<section id="proyecto" data-project class="relative py-28 md:py-40">
+  <div class="container-page grid items-center gap-16 lg:grid-cols-[1.1fr_1fr]">
+    <div class="min-w-0">
+      <p class="eyebrow" data-reveal>{copy.eyebrow}</p>
+      <h2 class="mt-4 text-4xl font-semibold tracking-[-0.03em] md:text-6xl" data-reveal>{copy.name}</h2>
+      <p class="mt-5 max-w-[40ch] text-xl font-medium tracking-tight" data-reveal>{copy.tagline}</p>
+      <div class="mt-6 grid max-w-[60ch] gap-4 text-lg leading-relaxed text-muted">
+        {copy.body.map((p) => <p data-reveal>{p}</p>)}
+      </div>
+      <dl class="mt-10 grid grid-cols-2 gap-x-8 gap-y-5" data-reveal>
+        {
+          copy.facts.map((fact) => (
+            <div class="min-w-0">
+              <dt class="eyebrow">{fact.label}</dt>
+              <dd class="mt-1">{fact.value}</dd>
+            </div>
+          ))
+        }
+      </dl>
+      <div class="mt-10 flex flex-wrap gap-3 text-sm" data-reveal>
+        <a href={profile.trayectosLive} class="rounded-full bg-fg px-5 py-2.5 font-medium text-ink transition-opacity hover:opacity-85">{copy.live} ↗</a>
+        <a href={profile.trayectosCode} class="rounded-full border border-line px-5 py-2.5 transition-colors hover:border-muted">{copy.code} ↗</a>
+      </div>
+    </div>
+
+    <!-- The phone: one ledger entry whose lines sum to zero. -->
+    <div class="mx-auto w-full max-w-[290px]" data-reveal data-phone>
+      <div class="rounded-[44px] border border-line bg-[#06080d] p-3 shadow-[0_40px_80px_-30px_#000]">
+        <div class="flex flex-col gap-3 rounded-[34px] bg-panel px-5 pt-4 pb-6 text-sm">
+          <div class="mx-auto mb-2 h-6 w-24 rounded-full bg-ink" aria-hidden="true"></div>
+          <p class="eyebrow">{ledger.title}</p>
+          <p class="text-xl font-semibold tracking-tight">{ledger.route}</p>
+          <p class="font-mono text-xs text-muted">{ledger.meta}</p>
+          <div class="flex items-baseline justify-between border-y border-line py-3">
+            <span class="font-mono text-xs text-muted">{ledger.costLabel}</span>
+            <strong class="text-2xl tracking-tight tabular-nums">{ledger.cost}</strong>
+          </div>
+          <p class="font-mono text-xs text-muted">{ledger.entry}</p>
+          <ul class="grid gap-1.5 font-mono text-xs tabular-nums">
+            {
+              ledger.lines.map((line) => (
+                <li class="flex justify-between gap-3">
+                  <span>{line.who}</span>
+                  <span class:list={[line.amount.startsWith('+') && 'text-ok']}>{line.amount}</span>
+                </li>
+              ))
+            }
+            <li class="mt-1 flex justify-between border-t border-dashed border-line pt-2 text-fg"><span>Σ</span><span>{zero}</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,72 @@
+---
+import '../styles/global.css';
+import { getAbsoluteLocaleUrl } from 'astro:i18n';
+import { locales, profile, t, type Locale } from '../i18n';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const copy = t(locale);
+const canonical = getAbsoluteLocaleUrl(locale, '');
+const ogImage = new URL('/og.png', Astro.site).href;
+
+const person = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: profile.name,
+  jobTitle: copy.hero.role,
+  url: canonical,
+  email: `mailto:${profile.email}`,
+  address: { '@type': 'PostalAddress', addressLocality: 'Málaga', addressCountry: 'ES' },
+  sameAs: [profile.github, profile.linkedin],
+  knowsAbout: ['PHP', 'Laravel', 'Python', 'PostgreSQL', 'MySQL', 'Redis', 'REST APIs', 'LLM engineering'],
+};
+---
+
+<!doctype html>
+<html lang={locale}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{copy.meta.title}</title>
+    <meta name="description" content={copy.meta.description} />
+    <meta name="theme-color" content="#0a0d14" />
+    <link rel="canonical" href={canonical} />
+    {locales.map((l) => <link rel="alternate" hreflang={l} href={getAbsoluteLocaleUrl(l, '')} />)}
+    <link rel="alternate" hreflang="x-default" href={getAbsoluteLocaleUrl('es', '')} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <meta property="og:type" content="profile" />
+    <meta property="og:title" content={copy.meta.title} />
+    <meta property="og:description" content={copy.meta.description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:locale" content={copy.meta.ogLocale} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <script type="application/ld+json" set:html={JSON.stringify(person)} />
+
+    <!-- Flag the page as animatable before first paint so nothing flashes.
+         With reduced motion the flag is not set and everything stays visible and still. -->
+    <script is:inline>
+      if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        document.documentElement.classList.add('motion');
+      }
+    </script>
+  </head>
+  <body class="bg-ink text-fg">
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:rounded-md focus:bg-fg focus:px-3 focus:py-2 focus:text-ink"
+    >
+      {copy.nav.skip}
+    </a>
+    <slot />
+    <script>
+      import { startMotion } from '../scripts/motion';
+      startMotion();
+    </script>
+  </body>
+</html>

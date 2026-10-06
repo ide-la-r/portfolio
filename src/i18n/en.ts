@@ -1,0 +1,246 @@
+import type { Dictionary } from './types';
+
+export const en: Dictionary = {
+  meta: {
+    title: 'Ismael de la Rosa · Backend / Full-Stack Engineer (PHP, Laravel, Python)',
+    description:
+      'Backend-leaning full-stack engineer in Málaga, Spain. Ingestion pipelines, queued jobs, REST integrations and LLM-backed features on a production Laravel SaaS.',
+    ogLocale: 'en_GB',
+  },
+  nav: {
+    label: 'Sections',
+    route: 'Journey',
+    work: 'Mainjobs',
+    how: 'How I work',
+    project: 'Project',
+    stack: 'Stack',
+    contact: 'Contact',
+    cv: 'CV',
+    cvFile: '/cv/CV-Ismael-de-la-Rosa-2026-EN.pdf',
+    switchLabel: 'Leer en español',
+    skip: 'Skip to content',
+  },
+  hero: {
+    role: 'Backend-leaning full-stack engineer',
+    summary:
+      'I own the ingestion and AI layers of a public-procurement platform in production, where my work is measured in uptime, query latency and API cost per request.',
+    location: 'Málaga, Spain (CET) · open to fully remote roles',
+    statLabel: 'the main listing query',
+    scroll: 'Scroll to follow the route',
+    photoAlt: 'Ismael de la Rosa',
+  },
+  route: {
+    eyebrow: 'Journey',
+    title: 'Five years of steady climbing',
+    intro: 'From wiring networks to owning ingestion for a production SaaS. Every stop is a step up.',
+    climb: 'elevation gained',
+    stops: [
+      {
+        year: '2021',
+        kind: 'study',
+        title: 'Technician Diploma in Microcomputer Systems & Networks',
+        place: 'IES Gerald Brenan',
+        body: 'Networks, systems and hardware. This is where the route starts.',
+      },
+      {
+        year: '2023',
+        kind: 'study',
+        title: 'Higher Technician Diploma in Web Development',
+        place: 'MEDAC Nova, Málaga',
+        body: 'EQF Level 5, two years post-secondary.',
+      },
+      {
+        year: '2024',
+        kind: 'study',
+        title: '42 Málaga',
+        place: 'Fundación Telefónica',
+        body: 'Selective full-time C and Unix immersion, learning peer to peer.',
+      },
+      {
+        year: '2025',
+        kind: 'work',
+        title: 'Web Developer (internship)',
+        place: 'Patrimar Inversiones',
+        body: 'The company web platform in PHP and JavaScript, in a two-person team.',
+      },
+      {
+        year: '2025',
+        kind: 'work',
+        title: 'PHP Full-Stack Developer',
+        place: 'Solbyte',
+        body: '8+ client projects to fixed agency deadlines: custom booking platforms, CRM/ERP work and internal tools. In-house and third-party REST APIs, DNS and Cloudflare.',
+      },
+      {
+        year: '2026',
+        kind: 'work',
+        title: 'Full-Stack PHP Engineer',
+        place: 'Mainjobs',
+        body: 'Ingestion and AI layers of a multi-tenant SaaS for public-sector tender tracking.',
+      },
+    ],
+  },
+  work: {
+    eyebrow: 'Now',
+    company: 'Mainjobs',
+    period: 'May 2026 – present',
+    title: 'One raw record, from source to customer',
+    context: 'Multi-tenant SaaS for Spanish public-sector tender tracking · Laravel 12, Filament, MySQL, Redis queues, Forge.',
+    steps: [
+      {
+        label: 'Ingestion',
+        title: 'Six public sources, one shape',
+        body: 'Regional and EU procurement sources, including attachment download behind captchas and rotating proxies. I fixed region- and deadline-parsing defects that were silently hiding thousands of tenders from customers’ search results.',
+      },
+      {
+        label: 'AI layer',
+        title: 'Provider resolved per service',
+        body: 'A versioned registry resolves provider and model across OpenAI, Anthropic and Gemini, with fallback when a provider has no credentials, per-model cost tracking and threshold alerts. It replaced a setup where one missing environment variable silently ran the most expensive model at roughly 10x the cost.',
+      },
+      {
+        label: 'Product',
+        title: 'AI inside the tender view, blocking nothing',
+        body: 'An LLM proposal generator with per-company knowledge sources, plan-based quotas and queued generation, so a long job never blocks a request. Large modules ship behind feature flags, in parts.',
+      },
+      {
+        label: 'Performance',
+        title: 'The most-used screen, 170x faster',
+        body: 'I restructured the ordering and pagination path of the main tender listing query.',
+      },
+    ],
+    latency: { label: 'main listing query', caption: 'before and after' },
+    card: [
+      { label: 'Title', value: 'Public lighting maintenance' },
+      { label: 'Body', value: 'Ayuntamiento de Málaga' },
+      { label: 'Deadline', value: '14 Oct 2026 · 14:00' },
+      { label: 'Amount', value: '€1,240,000.00' },
+      { label: 'CPV', value: '50232100' },
+    ],
+    sample: 'Sample data',
+  },
+  how: {
+    eyebrow: 'How I work',
+    title: 'Coding agents, held to pull-request standards',
+    intro:
+      'I work daily with Claude Code and Codex. Their output goes through what any other code goes through: tests, static analysis and review. And it gets reverted when it is wrong.',
+    terminal: [
+      { kind: 'cmd', text: '$ php artisan test --filter=ListingQuery' },
+      { kind: 'ok', text: '  PASS  Tests\\Feature\\ListingQueryTest' },
+      { kind: 'ok', text: '  ✓ orders by date without a table scan    2 ms' },
+      { kind: 'cmd', text: '$ ./vendor/bin/phpstan analyse' },
+      { kind: 'ok', text: '  [OK] No errors' },
+      { kind: 'cmd', text: '$ git push origin master' },
+      { kind: 'dim', text: '  deployed · 28 s' },
+    ],
+    points: [
+      {
+        title: 'A test you have never seen fail proves nothing',
+        body: 'Before calling a fix done, I undo it and check that the test goes red.',
+      },
+      {
+        title: 'Static analysis at zero',
+        body: 'Larastan catches missing classes and methods before they reach production.',
+      },
+      {
+        title: 'Shipping in parts',
+        body: 'Feature flags let large modules go out without waiting for everything.',
+      },
+      {
+        title: 'The unglamorous layer',
+        body: 'Encoding corruption in extracted PDFs, pagination and timezones: what nobody sees until it breaks.',
+      },
+    ],
+  },
+  project: {
+    eyebrow: 'Side project',
+    name: 'Libro de Trayectos',
+    tagline: 'What a car trip really costs, split between the people in it.',
+    body: [
+      'It computes the real cost of each trip, including the effect of elevation gain and the ceiling on how much of a descent a hybrid’s battery can actually absorb.',
+      'It splits the cost with double-entry bookkeeping: every trip is a journal entry whose lines sum to zero, enforced by a deferred PostgreSQL trigger. No script can unbalance the ledger, and money is integer cents throughout.',
+      'Live distance and elevation from OpenRouteService, degrading in steps when a free quota runs out, plus official ministry fuel prices.',
+    ],
+    facts: [
+      { label: 'Stack', value: 'Laravel · PostgreSQL · PWA' },
+      { label: 'Infrastructure', value: 'Docker on Render · Postgres on Neon' },
+      { label: 'Jobs', value: 'GitHub Actions' },
+      { label: 'Running cost', value: '€0 a month' },
+    ],
+    ledger: {
+      title: 'Libro de Trayectos',
+      route: 'Málaga → Granada',
+      meta: '128 km · ↑ 1,140 m',
+      costLabel: 'real cost',
+      cost: '€14.82',
+      entry: 'entry #213 · double entry',
+      lines: [
+        { who: 'Ismael (driver)', amount: '+9.88' },
+        { who: 'Ana', amount: '−4.94' },
+        { who: 'Luis', amount: '−4.94' },
+      ],
+    },
+    live: 'Open the app',
+    code: 'View the source',
+  },
+  stack: {
+    eyebrow: 'Stack',
+    title: 'What I work with',
+    groups: [
+      { name: 'Languages', items: ['PHP 8', 'JavaScript', 'Python', 'SQL'] },
+      {
+        name: 'Backend',
+        items: ['Laravel', 'Filament', 'REST APIs', 'Queues & scheduled jobs', 'MySQL', 'PostgreSQL', 'Redis', 'PHPUnit / Pest'],
+      },
+      { name: 'Frontend', items: ['Blade', 'Livewire', 'Tailwind CSS', 'HTML', 'Sass'] },
+      {
+        name: 'Platform',
+        items: ['Git', 'Linux', 'Bash', 'Docker', 'Laravel Forge', 'Render', 'Cloudflare / DNS', 'GitHub Actions', 'WordPress'],
+      },
+      {
+        name: 'AI engineering',
+        items: ['OpenAI', 'Anthropic', 'Gemini', 'Prompt engineering', 'Cost engineering', 'Coding agents'],
+      },
+      { name: 'Learning', items: ['Pandas', 'C', 'Java'] },
+    ],
+  },
+  education: {
+    eyebrow: 'Education',
+    title: 'Where it all comes from',
+    items: [
+      {
+        title: 'Higher Technician Diploma in Web Development',
+        place: 'MEDAC Nova, Málaga',
+        years: '2023 – 2025',
+        note: 'EQF Level 5 (Spanish Grado Superior in Web Application Development).',
+      },
+      {
+        title: '42 Málaga',
+        place: 'Fundación Telefónica',
+        years: '2024 – 2026',
+        note: 'Selective full-time C and Unix immersion (Piscine) plus the opening projects of the peer-to-peer cursus.',
+      },
+      {
+        title: 'Specialisation Course in Python Application Development',
+        place: 'CPIFP Alan Turing',
+        years: '2025 – 2026',
+        note: 'Application development in Python.',
+      },
+      {
+        title: 'Technician Diploma in Microcomputer Systems & Networks',
+        place: 'IES Gerald Brenan',
+        years: '2021 – 2023',
+        note: 'EQF Level 4. Networks, systems and hardware.',
+      },
+    ],
+    also: ['Cisco Python Essentials 2', 'Cisco CCNAv7', 'Cisco IT Essentials'],
+    languages: 'Spanish, native · English, B2 (Trinity), used daily in written technical work.',
+  },
+  contact: {
+    eyebrow: 'Contact',
+    title: 'Let’s talk',
+    body: 'Based in Málaga, Spain, and open to fully remote roles across EMEA and US-overlap hours. Email or LinkedIn both work.',
+    copy: 'Copy email',
+    copied: 'Copied',
+    cv: 'Download CV (PDF)',
+    footer: 'Built with Astro, GSAP and Tailwind CSS.',
+  },
+};
