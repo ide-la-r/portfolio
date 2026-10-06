@@ -10,7 +10,7 @@ interface Props {
 const { locale } = Astro.props;
 const copy = t(locale);
 
-// The photo is optional: drop src/assets/photo.(jpg|png|webp) in and it renders; without it the hero uses the full width.
+// The portrait is optional: drop src/assets/photo.(jpg|png|webp) in and it renders; without it the hero uses the full width.
 const photos = import.meta.glob<{ default: ImageMetadata }>('../../assets/photo.{jpg,jpeg,png,webp}', { eager: true });
 const photo = Object.values(photos)[0]?.default;
 ---
@@ -18,10 +18,26 @@ const photo = Object.values(photos)[0]?.default;
 <section data-hero class="relative flex min-h-[100svh] items-end pt-24 pb-14 md:items-center">
   <div class="container-page grid w-full items-center gap-12 lg:grid-cols-[1.25fr_1fr]">
     <div data-hero-copy class="min-w-0">
+      {
+        photo && (
+          <Image
+            data-hero-fade
+            src={photo}
+            alt=""
+            width={96}
+            height={96}
+            densities={[1, 2]}
+            class="mb-6 size-20 rounded-full object-cover object-[50%_26%] ring-1 ring-line lg:hidden"
+          />
+        )
+      }
       <p data-hero-fade class="eyebrow mb-6">{copy.hero.location}</p>
       <h1
         data-hero-name
-        class="text-[clamp(3rem,min(10vw,15svh),8.5rem)] leading-[0.92] font-semibold tracking-[-0.045em]"
+        class:list={[
+          'leading-[0.92] font-semibold tracking-[-0.045em]',
+          photo ? 'text-[clamp(3rem,min(10vw,14svh),6.75rem)]' : 'text-[clamp(3rem,min(10vw,15svh),8.5rem)]',
+        ]}
       >
         Ismael<br /><span class="whitespace-nowrap">de la Rosa</span>
       </h1>
@@ -35,17 +51,16 @@ const photo = Object.values(photos)[0]?.default;
 
     {
       photo && (
-        <div data-hero-photo class="relative mx-auto w-full max-w-sm lg:max-w-none">
+        <div data-hero-photo class="hero-portrait hidden lg:block">
           <Image
             src={photo}
             alt={copy.hero.photoAlt}
-            widths={[400, 640, 960]}
-            sizes="(min-width: 1024px) 40vw, 90vw"
+            widths={[480, 720, 960]}
+            sizes="(min-width: 1024px) 34vw, 1px"
             loading="eager"
             fetchpriority="high"
-            class="aspect-[4/5] w-full rounded-[28px] object-cover"
+            class="h-full w-full object-cover object-[50%_30%]"
           />
-          <div class="pointer-events-none absolute inset-0 rounded-[28px] ring-1 ring-fg/10 ring-inset" />
         </div>
       )
     }
@@ -67,5 +82,18 @@ const photo = Object.values(photos)[0]?.default;
 <style>
   :global(html.motion) [data-hero-name] {
     visibility: hidden;
+  }
+
+  /* The portrait has no frame: a soft circle around its halo fades the rest into
+     the page, so the figure seems to float on the same night as the site. The
+     image's own background is a touch lighter than the page, hence no edges at all. */
+  .hero-portrait {
+    aspect-ratio: 4 / 5;
+    max-height: 74svh;
+    width: 100%;
+    margin-left: auto;
+    --portrait-mask: radial-gradient(circle closest-side at 50% 42%, #000 86%, transparent 116%);
+    -webkit-mask-image: var(--portrait-mask);
+    mask-image: var(--portrait-mask);
   }
 </style>

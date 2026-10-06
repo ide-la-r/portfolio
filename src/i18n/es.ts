@@ -27,7 +27,7 @@ export const es: Dictionary = {
     location: 'Málaga · disponible en Málaga y en remoto',
     statLabel: 'la consulta principal del listado',
     scroll: 'Baja para ver la ruta',
-    photoAlt: 'Ismael de la Rosa',
+    photoAlt: 'Ilustración de Ismael de la Rosa',
   },
   route: {
     eyebrow: 'Trayectoria',

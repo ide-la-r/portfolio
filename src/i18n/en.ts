@@ -27,7 +27,7 @@ export const en: Dictionary = {
     location: 'Málaga, Spain (CET) · open to fully remote roles',
     statLabel: 'the main listing query',
     scroll: 'Scroll to follow the route',
-    photoAlt: 'Ismael de la Rosa',
+    photoAlt: 'Illustrated portrait of Ismael de la Rosa',
   },
   route: {
     eyebrow: 'Journey',
