@@ -15,8 +15,13 @@ export interface RouteStop {
 }
 
 export interface TerminalLine {
-  kind: 'cmd' | 'ok' | 'dim';
+  kind: 'cmd' | 'ok' | 'fail' | 'note' | 'warn';
   text: string;
+}
+
+interface Habit {
+  title: string;
+  body: string;
 }
 
 /**
@@ -81,14 +86,34 @@ export interface Dictionary {
     };
     sample: string;
   };
-  how: { eyebrow: string; title: string; intro: string; terminal: TerminalLine[]; points: { title: string; body: string }[] };
+  how: {
+    eyebrow: string;
+    title: string;
+    intro: string;
+    points: Tuple<Habit, 4>;
+    /** The first thing the terminal types, while the chapter title is on screen. */
+    prompt: TerminalLine;
+    /** What the terminal types while each habit is on screen, one group per habit. */
+    terminal: Tuple<TerminalLine[], 4>;
+  };
   project: {
     eyebrow: string;
     name: string;
     tagline: string;
-    body: string[];
+    /** Real cost, double-entry ledger, data sources: the three states of the phone. */
+    body: Tuple<string, 3>;
     facts: { label: string; value: string }[];
-    ledger: { title: string; route: string; meta: string; costLabel: string; cost: string; entry: string; lines: { who: string; amount: string }[] };
+    ledger: {
+      title: string;
+      route: string;
+      meta: string;
+      costLabel: string;
+      cost: string;
+      entry: string;
+      lines: { who: string; amount: string }[];
+      total: string;
+      installed: string;
+    };
     live: string;
     code: string;
   };

@@ -144,14 +144,28 @@ export const es: Dictionary = {
     title: 'Agentes de programación, con la exigencia de una pull request',
     intro:
       'Trabajo a diario con Claude Code y Codex. Lo que producen pasa por lo mismo que cualquier otro código: tests, análisis estático y revisión. Y se revierte cuando está mal.',
+    prompt: { kind: 'cmd', text: '$ claude "ordena el listado por fecha"' },
     terminal: [
-      { kind: 'cmd', text: '$ php artisan test --filter=ListingQuery' },
-      { kind: 'ok', text: '  PASS  Tests\\Feature\\ListingQueryTest' },
-      { kind: 'ok', text: '  ✓ ordena por fecha sin recorrer la tabla    2 ms' },
-      { kind: 'cmd', text: '$ ./vendor/bin/phpstan analyse' },
-      { kind: 'ok', text: '  [OK] No errors' },
-      { kind: 'cmd', text: '$ git push origin master' },
-      { kind: 'dim', text: '  desplegado · 28 s' },
+      [
+        { kind: 'note', text: '# sin el arreglo' },
+        { kind: 'cmd', text: '$ php artisan test --filter=Listing' },
+        { kind: 'fail', text: '  FAIL  ordena por fecha' },
+        { kind: 'note', text: '# con el arreglo' },
+        { kind: 'cmd', text: '$ php artisan test --filter=Listing' },
+        { kind: 'ok', text: '  PASS  ordena por fecha · 2 ms' },
+      ],
+      [
+        { kind: 'cmd', text: '$ composer stan' },
+        { kind: 'ok', text: '  [OK] No errors' },
+      ],
+      [
+        { kind: 'cmd', text: '$ git push origin master' },
+        { kind: 'ok', text: '  ✓ desplegado, bandera apagada' },
+      ],
+      [
+        { kind: 'cmd', text: '$ php artisan pdf:extract pliego.pdf' },
+        { kind: 'warn', text: '  "JOSÃ‰" → "José" · UTF-8 ✓' },
+      ],
     ],
     points: [
       {
@@ -190,7 +204,7 @@ export const es: Dictionary = {
     ledger: {
       title: 'Libro de Trayectos',
       route: 'Málaga → Granada',
-      meta: '128 km · ↑ 1.140 m',
+      meta: '128 km · ↑ 1140 m',
       costLabel: 'coste real',
       cost: '14,82 €',
       entry: 'asiento nº 213 · partida doble',
@@ -199,6 +213,8 @@ export const es: Dictionary = {
         { who: 'Ana', amount: '−4,94' },
         { who: 'Luis', amount: '−4,94' },
       ],
+      total: '0,00',
+      installed: 'Instalada como app',
     },
     live: 'Abrir la app',
     code: 'Ver el código',

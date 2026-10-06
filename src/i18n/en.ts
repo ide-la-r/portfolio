@@ -144,14 +144,28 @@ export const en: Dictionary = {
     title: 'Coding agents, held to pull-request standards',
     intro:
       'I work daily with Claude Code and Codex. Their output goes through what any other code goes through: tests, static analysis and review. And it gets reverted when it is wrong.',
+    prompt: { kind: 'cmd', text: '$ claude "sort the listing by date"' },
     terminal: [
-      { kind: 'cmd', text: '$ php artisan test --filter=ListingQuery' },
-      { kind: 'ok', text: '  PASS  Tests\\Feature\\ListingQueryTest' },
-      { kind: 'ok', text: '  ✓ orders by date without a table scan    2 ms' },
-      { kind: 'cmd', text: '$ ./vendor/bin/phpstan analyse' },
-      { kind: 'ok', text: '  [OK] No errors' },
-      { kind: 'cmd', text: '$ git push origin master' },
-      { kind: 'dim', text: '  deployed · 28 s' },
+      [
+        { kind: 'note', text: '# without the fix' },
+        { kind: 'cmd', text: '$ php artisan test --filter=Listing' },
+        { kind: 'fail', text: '  FAIL  orders by date' },
+        { kind: 'note', text: '# with the fix' },
+        { kind: 'cmd', text: '$ php artisan test --filter=Listing' },
+        { kind: 'ok', text: '  PASS  orders by date · 2 ms' },
+      ],
+      [
+        { kind: 'cmd', text: '$ composer stan' },
+        { kind: 'ok', text: '  [OK] No errors' },
+      ],
+      [
+        { kind: 'cmd', text: '$ git push origin master' },
+        { kind: 'ok', text: '  ✓ deployed, flag off' },
+      ],
+      [
+        { kind: 'cmd', text: '$ php artisan pdf:extract tender.pdf' },
+        { kind: 'warn', text: '  "JOSÃ‰" → "José" · UTF-8 ✓' },
+      ],
     ],
     points: [
       {
@@ -199,6 +213,8 @@ export const en: Dictionary = {
         { who: 'Ana', amount: '−4.94' },
         { who: 'Luis', amount: '−4.94' },
       ],
+      total: '0.00',
+      installed: 'Installed as an app',
     },
     live: 'Open the app',
     code: 'View the source',

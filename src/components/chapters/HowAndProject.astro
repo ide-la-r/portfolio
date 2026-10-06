@@ -1,0 +1,296 @@
+---
+import Scrolly from '../Scrolly.astro';
+import Step from '../Step.astro';
+import { profile, t, type Locale } from '../../i18n';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const { how, project } = t(locale);
+const ledger = project.ledger;
+const lastBody = project.body.length - 1;
+---
+
+<!-- Two chapters, one device: the terminal of "how I work" becomes the phone that
+     runs the side project, so both share a single sticky visual. -->
+<Scrolly id="como-trabajo" scene="device" stepHeight="50svh">
+  <!-- Drawn on a 420 × 540 canvas and scaled to fit (scripts/fit.ts). -->
+  <div slot="visual" class="device-stage" data-fit="420x540" aria-hidden="true">
+    <div class="device" data-device>
+      <div class="device-bar" data-device-bar>
+        <i></i><i></i><i></i>
+        <span>~/tenders</span>
+      </div>
+      <div class="device-term">
+        <span class:list={['term-line', `term-${how.prompt.kind}`]} data-line data-group="intro">
+          {how.prompt.text}
+        </span>
+        {
+          how.terminal.map((group, g) =>
+            group.map((line) => (
+              <span class:list={['term-line', `term-${line.kind}`]} data-line data-group={g + 1}>
+                {line.text}
+              </span>
+            )),
+          )
+        }
+      </div>
+
+      <div class="device-phone" data-phone data-js-only>
+        <span class="phone-notch"></span>
+        <div class="phone-toast" data-toast>✓ {ledger.installed}</div>
+        <p class="eyebrow">{ledger.title}</p>
+        <p class="phone-route">{ledger.route}</p>
+        <p class="phone-meta">{ledger.meta}</p>
+        <svg class="phone-elevation" viewBox="0 0 240 64">
+          <path class="phone-elevation-ghost" d="M0 58 C30 56 46 34 74 26 S118 8 146 14 S196 34 240 30"></path>
+          <path data-elevation pathLength="1" d="M0 58 C30 56 46 34 74 26 S118 8 146 14 S196 34 240 30"></path>
+        </svg>
+        <div class="phone-cost" data-cost>
+          <span>{ledger.costLabel}</span>
+          <strong>{ledger.cost}</strong>
+        </div>
+        <div class="phone-ledger" data-ledger>
+          <p class="phone-entry">{ledger.entry}</p>
+          <ul>
+            {
+              ledger.lines.map((line) => (
+                <li data-ledger-line>
+                  <span>{line.who}</span>
+                  <span class:list={[line.amount.startsWith('+') && 'text-ok']}>{line.amount}</span>
+                </li>
+              ))
+            }
+            <li class="phone-sum" data-ledger-sum>
+              <span>Σ</span>
+              <span>{ledger.total}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <Step name="how">
+    <p class="eyebrow">{how.eyebrow}</p>
+    <h2 class="mt-4 text-4xl font-semibold tracking-[-0.03em] md:text-5xl">{how.title}</h2>
+    <p class="mt-5 text-lg text-muted">{how.intro}</p>
+  </Step>
+
+  {
+    how.points.map((point) => (
+      <Step name="habit">
+        <h3 class="text-2xl font-semibold tracking-tight md:text-3xl">{point.title}</h3>
+        <p class="mt-3 text-lg text-muted">{point.body}</p>
+      </Step>
+    ))
+  }
+
+  <Step name="project" id="proyecto">
+    <p class="eyebrow">{project.eyebrow}</p>
+    <h2 class="mt-4 text-4xl font-semibold tracking-[-0.03em] md:text-6xl">{project.name}</h2>
+    <p class="mt-5 text-xl font-medium tracking-tight">{project.tagline}</p>
+  </Step>
+
+  {
+    project.body.map((paragraph, i) => (
+      <Step name="project-detail">
+        <p class="text-xl leading-relaxed text-muted">{paragraph}</p>
+        {i === lastBody && (
+          <>
+            <dl class="mt-8 grid grid-cols-2 gap-x-8 gap-y-5">
+              {project.facts.map((fact) => (
+                <div class="min-w-0">
+                  <dt class="eyebrow">{fact.label}</dt>
+                  <dd class="mt-1">{fact.value}</dd>
+                </div>
+              ))}
+            </dl>
+            <div class="mt-8 flex flex-wrap gap-3 text-sm">
+              <a href={profile.trayectosLive} class="rounded-full bg-fg px-5 py-2.5 font-medium text-ink transition-opacity hover:opacity-85">
+                {project.live} ↗
+              </a>
+              <a href={profile.trayectosCode} class="rounded-full border border-line px-5 py-2.5 transition-colors hover:border-muted">
+                {project.code} ↗
+              </a>
+            </div>
+          </>
+        )}
+      </Step>
+    ))
+  }
+</Scrolly>
+
+<style>
+  .device-stage {
+    width: 420px;
+    height: 540px;
+  }
+
+  .device {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    translate: -50% -50%;
+    width: 400px;
+    height: 372px;
+    overflow: hidden;
+    border: 1px solid var(--color-line);
+    border-radius: 14px;
+    background: #06080d;
+    box-shadow: 0 40px 80px -40px #000;
+  }
+
+  .device-bar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    height: 38px;
+    padding-inline: 14px;
+    border-bottom: 1px solid var(--color-line);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--color-off);
+  }
+  .device-bar i {
+    width: 10px;
+    height: 10px;
+    border-radius: 9999px;
+    background: var(--color-line);
+  }
+  .device-bar span {
+    margin-left: auto;
+  }
+
+  .device-term {
+    position: absolute;
+    top: 38px;
+    left: 0;
+    width: 400px;
+    padding: 14px 16px;
+    font-family: var(--font-mono);
+    font-size: 13.5px;
+    line-height: 1.7;
+  }
+  .term-line {
+    display: block;
+    width: fit-content;
+    white-space: pre;
+    color: var(--color-muted);
+  }
+  .term-cmd {
+    color: var(--color-fg);
+  }
+  .term-ok {
+    color: var(--color-ok);
+  }
+  .term-fail {
+    color: #ff8f8f;
+  }
+  .term-warn {
+    color: var(--color-warm);
+  }
+  .term-note {
+    color: var(--color-off);
+  }
+
+  .device-phone {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 260px;
+    height: 520px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 18px 22px 24px;
+    font-size: 13px;
+  }
+  .phone-notch {
+    width: 92px;
+    height: 24px;
+    margin: 0 auto 14px;
+    border-radius: 9999px;
+    background: var(--color-panel-2);
+  }
+  .phone-toast {
+    position: absolute;
+    left: 16px;
+    right: 16px;
+    top: 52px;
+    z-index: 1;
+    padding: 9px 12px;
+    border: 1px solid color-mix(in srgb, var(--color-ok) 40%, transparent);
+    border-radius: 12px;
+    background: color-mix(in srgb, var(--color-ok) 14%, var(--color-panel));
+    color: var(--color-ok);
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+  }
+  .phone-route {
+    font-size: 21px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+  .phone-meta,
+  .phone-entry {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--color-muted);
+  }
+  .phone-elevation {
+    width: 100%;
+    height: 64px;
+    overflow: visible;
+  }
+  .phone-elevation path {
+    fill: none;
+    stroke-width: 2;
+  }
+  .phone-elevation-ghost {
+    stroke: var(--color-line);
+  }
+  [data-elevation] {
+    stroke: var(--color-warm);
+    stroke-dasharray: 1;
+    stroke-dashoffset: 0;
+  }
+  .phone-cost {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    padding-block: 10px;
+    border-block: 1px solid var(--color-line);
+  }
+  .phone-cost span {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--color-muted);
+  }
+  .phone-cost strong {
+    font-size: 24px;
+    letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
+  }
+  .phone-ledger ul {
+    display: grid;
+    gap: 6px;
+    margin-top: 8px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-variant-numeric: tabular-nums;
+  }
+  .phone-ledger li {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .phone-sum {
+    margin-top: 2px;
+    padding-top: 7px;
+    border-top: 1px dashed var(--color-line);
+    color: var(--color-fg);
+  }
+</style>
