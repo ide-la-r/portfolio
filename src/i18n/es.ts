@@ -226,7 +226,7 @@ export const es: Dictionary = {
     eyebrow: 'Stack',
     title: 'Con qué trabajo',
     groups: [
-      { name: 'Lenguajes', items: ['PHP 8', 'JavaScript', 'Python', 'SQL'] },
+      { name: 'Lenguajes', items: ['PHP 8', 'JavaScript', 'Python', 'SQL', 'C', 'Java'] },
       {
         name: 'Backend',
         items: ['Laravel', 'Filament', 'APIs REST', 'Colas y tareas programadas', 'MySQL', 'PostgreSQL', 'Redis', 'PHPUnit / Pest'],
@@ -240,7 +240,7 @@ export const es: Dictionary = {
         name: 'Ingeniería de IA',
         items: ['OpenAI', 'Anthropic', 'Gemini', 'Diseño de prompts', 'Control de coste', 'Agentes de programación'],
       },
-      { name: 'Aprendiendo', items: ['Pandas', 'C', 'Java'] },
+      { name: 'Aprendiendo', items: ['Rust', 'Pandas'] },
     ],
   },
   education: {
