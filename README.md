@@ -59,7 +59,15 @@ npm run dev      # http://localhost:4321
 npm run build    # astro check + build into dist/
 npm run preview
 npm run deploy   # build + upload dist/ to Cloudflare (needs `npx wrangler login` once)
+npm run cv       # print the CV (cv/*.html) to public/cv/*.pdf
 ```
+
+## CV
+
+The CVs offered for download are written in `cv/es.html` and `cv/en.html` and printed to PDF
+with `npm run cv`, which drives a Chromium browser already installed on the machine (Edge on
+Windows by default, or the one `CHROME_PATH` points to). It fails if a CV no longer fits on one
+page.
 
 ## Deployment
 

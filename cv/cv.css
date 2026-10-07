@@ -1,0 +1,157 @@
+/* One-page A4 CV, printed to PDF by scripts/build-cv.mjs.
+   Plain Arial and black on white: it has to survive ATS parsers and office printers. */
+@page {
+  size: A4;
+  margin: 0;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+body {
+  width: 210mm;
+  padding: 38px 45px 30px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 11px;
+  line-height: 14px;
+  color: #111;
+}
+
+/* Addresses are clickable in the PDF and never split across two lines */
+a {
+  color: inherit;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+b {
+  font-weight: 700;
+}
+
+.muted {
+  color: #444;
+}
+
+/* Header ------------------------------------------------------------------ */
+header {
+  padding-bottom: 10px;
+  border-bottom: 1.4px solid #111;
+}
+
+h1 {
+  font-size: 28px;
+  line-height: 30px;
+  font-weight: 700;
+}
+
+.role {
+  margin-top: 4px;
+  font-size: 14px;
+  line-height: 18px;
+  font-weight: 700;
+  letter-spacing: 0.035em;
+}
+
+.contact {
+  margin-top: 8px;
+}
+
+.contact + .contact {
+  margin-top: 3px;
+}
+
+.where {
+  margin-top: 4px;
+  color: #444;
+}
+
+/* Sections ---------------------------------------------------------------- */
+section {
+  margin-top: 9px;
+}
+
+h2 {
+  margin-bottom: 5px;
+  padding-bottom: 3px;
+  border-bottom: 0.8px solid #b3b3b3;
+  font-size: 12px;
+  line-height: 14px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* A title on the left and a date or a link on the right, on one baseline */
+.line {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+}
+
+.line > :last-child {
+  flex: none;
+  white-space: nowrap;
+}
+
+.entry {
+  margin-top: 7px;
+}
+
+.entry:first-of-type {
+  margin-top: 0;
+}
+
+.title {
+  font-size: 14px;
+  line-height: 18px;
+}
+
+.when {
+  color: #333;
+}
+
+.sub {
+  font-style: italic;
+  color: #444;
+}
+
+ul {
+  margin: 3px 0 0 17px;
+}
+
+li {
+  margin-top: 2.5px;
+  padding-left: 1px;
+}
+
+/* Skills: one label per line */
+.skills p + p {
+  margin-top: 3.5px;
+}
+
+/* Education --------------------------------------------------------------- */
+.study {
+  margin-top: 5px;
+}
+
+.study:first-of-type {
+  margin-top: 0;
+}
+
+.extra {
+  margin-top: 6px;
+  color: #444;
+}
+
+.extra b {
+  color: #111;
+}

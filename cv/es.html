@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <title>CV · Ismael de la Rosa Guerrero</title>
+    <link rel="stylesheet" href="cv.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Ismael de la Rosa Guerrero</h1>
+      <p class="role">Desarrollador Full-Stack — PHP · Laravel · Python</p>
+      <p class="contact">
+        ismaeldelarosaguerrero@gmail.com · +34 644 969 333 ·
+        <a href="https://github.com/ide-la-r">github.com/ide-la-r</a> ·
+        <a href="https://www.linkedin.com/in/ismael-de-la-rosa-guerrero">linkedin.com/in/ismael-de-la-rosa-guerrero</a>
+      </p>
+      <p class="where">Málaga, Andalucía — disponible en Málaga y en remoto.</p>
+    </header>
+
+    <section>
+      <h2>Perfil</h2>
+      <p>
+        Desarrollador full-stack con orientación a backend y experiencia en producción sobre SaaS multi-tenant en
+        Laravel: pipelines de ingesta de datos, trabajos en cola, integraciones REST y funcionalidades apoyadas en
+        modelos de lenguaje. Soy responsable de las capas de ingesta y de IA de una plataforma de licitaciones
+        públicas, donde el trabajo se mide en disponibilidad, latencia y coste de API por petición. Trabajo a diario
+        con agentes de programación (Claude Code, Codex) y trato lo que producen como cualquier otra
+        <i>pull request</i>: con tests y revisión.
+      </p>
+    </section>
+
+    <section>
+      <h2>Experiencia</h2>
+
+      <div class="entry">
+        <p class="line">
+          <span class="title"><b>Desarrollador Full-Stack PHP</b> — Mainjobs</span>
+          <span class="when">Mayo 2026 - Actualidad</span>
+        </p>
+        <p class="sub">SaaS multi-tenant de seguimiento de licitaciones públicas · Laravel 12, Filament, MySQL, colas con Redis, Forge</p>
+        <ul>
+          <li>
+            Responsable de la capa de ingesta que alimenta todo el producto: seis fuentes de contratación pública,
+            autonómicas y europeas, con descarga de adjuntos tras captchas y proxies rotatorios. Corregí fallos de
+            interpretación de plazos y de localización que mantenían <b>miles de licitaciones invisibles</b> en las
+            búsquedas de los clientes.
+          </li>
+          <li>
+            Reduje la consulta principal del listado de licitaciones de <b>340 ms a 2 ms</b> reestructurando el orden y
+            la paginación: es la pantalla más usada del producto.
+          </li>
+          <li>
+            Diseñé la capa de IA: un registro versionado que resuelve proveedor y modelo por servicio entre OpenAI,
+            Anthropic y Gemini, con reserva automática si un proveedor no tiene credenciales, coste por modelo y avisos
+            por umbral. Sustituyó a una configuración donde una variable de entorno ausente ejecutaba en silencio el
+            modelo más caro del catálogo, a unas 10 veces el coste y sin dejar ningún error.
+          </li>
+          <li>
+            Entregué un generador de memorias con IA integrado en la ficha de la licitación: fuentes de conocimiento por
+            empresa, cupos según el plan contratado y generación en cola, para que un trabajo largo no bloquee nunca una
+            petición.
+          </li>
+          <li>
+            Publico módulos grandes tras banderas de funcionalidad para poder desplegar por partes, y me ocupo de la
+            capa ingrata: corrupción de codificación en PDF extraídos, casos límite de paginación y de zonas horarias.
+          </li>
+        </ul>
+      </div>
+
+      <div class="entry">
+        <p class="line">
+          <span class="title"><b>Desarrollador Full-Stack PHP</b> — Solbyte</span>
+          <span class="when">Agosto 2025 - Abril 2026</span>
+        </p>
+        <p class="sub">Agencia web — proyectos de cliente en PHP/Laravel, APIs REST y WordPress</p>
+        <ul>
+          <li>
+            Saqué adelante <b>más de 8 proyectos de cliente</b> en PHP y Laravel con plazos de agencia: plataformas de
+            reservas a medida, trabajos sobre CRM/ERP y herramientas internas, asumiendo ruteo, controladores y vistas.
+          </li>
+          <li>
+            Construí APIs REST propias e integré las de terceros, y automaticé flujos de trabajo recurrentes de principio
+            a fin, incluida la configuración de DNS y Cloudflare de los sitios que entregaba.
+          </li>
+          <li>
+            Desarrollé y mantuve alrededor de <b>10 sitios WordPress</b>, con plugins propios en PHP cuando los que había
+            no encajaban.
+          </li>
+        </ul>
+      </div>
+
+      <div class="entry">
+        <p class="line">
+          <span class="title"><b>Desarrollador Web</b> — Patrimar Inversiones (prácticas)</span>
+          <span class="when">Abril 2025 - Junio 2025</span>
+        </p>
+        <p class="sub">
+          Desarrollo de la plataforma web de la empresa en PHP, JavaScript, HTML y CSS, en un equipo de dos personas —
+          github.com/Sergio8spider/webpatrimar
+        </p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Proyecto destacado</h2>
+      <div class="entry">
+        <p class="line">
+          <span class="title"><b>Libro de Trayectos</b> — libro de cuentas compartido para viajes en coche (Laravel, PWA)</span>
+          <a class="when" href="https://trayectos.onrender.com">trayectos.onrender.com</a>
+        </p>
+        <ul>
+          <li>
+            Calcula lo que cuesta de verdad cada trayecto —incluido el efecto del desnivel y el techo de bajada que la
+            batería de un híbrido puede absorber de verdad— y lo reparte entre los ocupantes con
+            <b>contabilidad por partida doble</b>: cada viaje es un asiento cuyas líneas suman cero, garantizado por un
+            <i>trigger</i> diferido de PostgreSQL para que ningún script pueda descuadrar el libro. Todo el dinero en
+            enteros de céntimos.
+          </li>
+          <li>
+            Distancia y desnivel reales desde OpenRouteService, con degradación por escalones al agotarse una cuota
+            gratuita; precios oficiales del Ministerio y tarifa eléctrica; cada trayecto congelado en un
+            <i>snapshot</i> de coste inmutable. Instalable como aplicación (PWA), también en iOS. Dockerizado en Render
+            con Postgres en Neon y tareas programadas en GitHub Actions, con <b>coste de funcionamiento de 0 €</b>.
+            Código: <a href="https://github.com/ide-la-r/Trayectos">github.com/ide-la-r/Trayectos</a>.
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="skills">
+      <h2>Competencias técnicas</h2>
+      <p><b>Lenguajes:</b> PHP 8, JavaScript, Python, SQL</p>
+      <p><b>Backend:</b> Laravel, Filament, APIs REST, colas y tareas programadas, MySQL, PostgreSQL, Redis, PHPUnit/Pest</p>
+      <p><b>Frontend:</b> Blade, Livewire, Tailwind CSS, HTML, Sass · <b>Aprendiendo:</b> Pandas, C, Java</p>
+      <p><b>Plataforma:</b> Git, Linux, Bash, Docker, Laravel Forge, Render, Cloudflare/DNS, GitHub Actions, WordPress</p>
+      <p>
+        <b>Ingeniería de IA:</b> APIs de OpenAI / Anthropic / Gemini, diseño de prompts y control de coste, agentes de
+        programación en el día a día
+      </p>
+    </section>
+
+    <section>
+      <h2>Formación</h2>
+      <div class="study">
+        <p class="line">
+          <span><b>Técnico Superior en Desarrollo de Aplicaciones Web — MEDAC Nova, Málaga</b>
+            <span class="muted">· Grado Superior de FP, nivel 5 MEC</span></span>
+          <span class="when">2023 - 2025</span>
+        </p>
+      </div>
+      <div class="study">
+        <p class="line">
+          <span><b>42 Málaga — Fundación Telefónica</b></span>
+          <span class="when">2024 - 2026</span>
+        </p>
+        <p class="muted">
+          Inmersión selectiva a jornada completa en C y Unix (<i>Piscine</i>) y primeros proyectos del cursus entre pares.
+        </p>
+      </div>
+      <div class="extra">
+        <p>
+          <b>Además:</b> Especialización en desarrollo con Python, CPIFP Alan Turing (2025-2026) · Técnico en Sistemas
+          Microinformáticos y Redes, IES Gerald Brenan (2021-2023) · Certificaciones Cisco: Python Essentials 2, CCNAv7,
+          IT Essentials.
+        </p>
+        <p><b>Idiomas:</b> Español nativo · Inglés B2 (Trinity), de uso diario en documentación técnica y revisión de código.</p>
+      </div>
+    </section>
+  </body>
+</html>

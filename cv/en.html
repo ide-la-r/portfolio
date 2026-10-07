@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>CV · Ismael de la Rosa Guerrero</title>
+    <link rel="stylesheet" href="cv.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Ismael de la Rosa Guerrero</h1>
+      <p class="role">Backend / Full-Stack Engineer — PHP · Laravel · Python</p>
+      <p class="contact">
+        ismaeldelarosaguerrero@gmail.com · +34 644 969 333 ·
+        <a href="https://github.com/ide-la-r">github.com/ide-la-r</a> ·
+        <a href="https://www.linkedin.com/in/ismael-de-la-rosa-guerrero">linkedin.com/in/ismael-de-la-rosa-guerrero</a>
+      </p>
+      <p class="where">Málaga, Spain (CET/CEST) — available for fully remote roles across EMEA and US-overlap hours.</p>
+    </header>
+
+    <section>
+      <h2>Summary</h2>
+      <p>
+        Backend-leaning full-stack engineer with production experience in multi-tenant Laravel SaaS: ingestion
+        pipelines, queued jobs, REST integrations and LLM-backed features. I own the ingestion and AI layers of a
+        public-procurement platform, where my work is measured in uptime, query latency and API cost per request. I work
+        daily with coding agents (Claude Code, Codex) and treat their output the way I treat any pull request: tested,
+        reviewed and reverted when it is wrong.
+      </p>
+    </section>
+
+    <section>
+      <h2>Experience</h2>
+
+      <div class="entry">
+        <p class="line">
+          <span class="title"><b>Full-Stack PHP Engineer</b> — Mainjobs</span>
+          <span class="when">May 2026 - Present</span>
+        </p>
+        <p class="sub">Multi-tenant SaaS for Spanish public-sector tender tracking · Laravel 12, Filament, MySQL, Redis queues, Forge</p>
+        <ul>
+          <li>
+            Own the ingestion layer that feeds the whole product: six regional and EU procurement sources, including
+            attachment download behind captchas and rotating proxies. Fixed region- and deadline-parsing defects that
+            were silently hiding <b>thousands of tenders</b> from customers' search results.
+          </li>
+          <li>
+            Cut the main tender listing query from <b>340 ms to 2 ms</b> by restructuring the ordering and pagination
+            path — the most-used screen in the product.
+          </li>
+          <li>
+            Designed the AI layer: a versioned registry that resolves provider and model per service across OpenAI,
+            Anthropic and Gemini, with fallback when a provider has no credentials, per-model cost tracking and threshold
+            alerts. It replaced a setup where one missing environment variable had silently run the catalogue's most
+            expensive model at roughly 10x the cost, with no error anywhere.
+          </li>
+          <li>
+            Shipped an LLM proposal generator inside the tender detail view: per-company knowledge sources, plan-based
+            quotas and queued generation, so a long job never blocks a request.
+          </li>
+          <li>
+            Ship large modules behind feature flags to release in parts, and work the unglamorous layer: encoding
+            corruption in extracted PDFs, pagination and timezone edge cases.
+          </li>
+        </ul>
+      </div>
+
+      <div class="entry">
+        <p class="line">
+          <span class="title"><b>PHP Full-Stack Developer</b> — Solbyte</span>
+          <span class="when">August 2025 - April 2026</span>
+        </p>
+        <p class="sub">Web agency — client projects in PHP/Laravel, REST APIs and WordPress</p>
+        <ul>
+          <li>
+            Delivered <b>8+ client projects</b> in PHP and Laravel to fixed agency deadlines: custom booking platforms,
+            CRM/ERP work and internal tools, owning routing, controllers and views.
+          </li>
+          <li>
+            Built in-house REST APIs and integrated third-party ones, and automated recurring workflows end to end,
+            including DNS and Cloudflare configuration for the sites I shipped.
+          </li>
+          <li>
+            Built and maintained around <b>10 WordPress sites</b>, with custom PHP plugins where the off-the-shelf ones
+            did not fit.
+          </li>
+        </ul>
+      </div>
+
+      <div class="entry">
+        <p class="line">
+          <span class="title"><b>Web Developer</b> — Patrimar Inversiones (Internship)</span>
+          <span class="when">April 2025 - June 2025</span>
+        </p>
+        <p class="sub">
+          Built the company web platform in PHP, JavaScript, HTML and CSS in a two-person team —
+          github.com/Sergio8spider/webpatrimar
+        </p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Selected project</h2>
+      <div class="entry">
+        <p class="line">
+          <span class="title"><b>Libro de Trayectos</b> — shared ledger for car journeys (Laravel, PWA)</span>
+          <a class="when" href="https://trayectos.onrender.com">trayectos.onrender.com</a>
+        </p>
+        <ul>
+          <li>
+            Computes what a car trip actually costs — including the effect of elevation gain, and the ceiling on how much
+            of a descent a hybrid's battery can actually absorb — and splits it between passengers using
+            <b>double-entry bookkeeping</b>: every trip is a journal entry whose lines sum to zero, enforced by a deferred
+            PostgreSQL trigger so no script can unbalance the ledger. Money in integer cents throughout.
+          </li>
+          <li>
+            Live distance and elevation from OpenRouteService, degrading in steps to a straight-line and altitude estimate
+            when a free quota runs out; official ministry fuel prices and grid electricity rates for EVs; each trip frozen
+            in an immutable cost snapshot. Installable PWA, iOS included. Dockerised on Render with Postgres on Neon and
+            scheduled tasks on GitHub Actions, <b>running at zero cost</b>. Source:
+            <a href="https://github.com/ide-la-r/Trayectos">github.com/ide-la-r/Trayectos</a>.
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="skills">
+      <h2>Technical skills</h2>
+      <p><b>Languages:</b> PHP 8, JavaScript, Python, SQL</p>
+      <p><b>Backend:</b> Laravel, Filament, REST APIs, queues &amp; scheduled jobs, MySQL, PostgreSQL, Redis, PHPUnit/Pest</p>
+      <p><b>Frontend:</b> Blade, Livewire, Tailwind CSS, HTML, Sass · <b>Learning:</b> Pandas, C, Java</p>
+      <p><b>Platform:</b> Git, Linux, Bash, Docker, Laravel Forge, Render, Cloudflare/DNS, GitHub Actions, WordPress</p>
+      <p><b>AI engineering:</b> OpenAI / Anthropic / Gemini APIs, prompt and cost engineering, coding agents in daily workflow</p>
+    </section>
+
+    <section>
+      <h2>Education</h2>
+      <div class="study">
+        <p class="line">
+          <span><b>Higher Technician Diploma in Web Development — MEDAC Nova, Málaga</b></span>
+          <span class="when">2023 - 2025</span>
+        </p>
+        <p class="muted">
+          EQF Level 5, two years post-secondary (Spanish <i>Grado Superior</i> in Web Application Development).
+        </p>
+      </div>
+      <div class="study">
+        <p class="line">
+          <span><b>42 Málaga — Fundación Telefónica</b></span>
+          <span class="when">2024 - 2026</span>
+        </p>
+        <p class="muted">
+          Selective full-time C and Unix immersion (<i>Piscine</i>) plus the opening projects of the peer-to-peer cursus.
+        </p>
+      </div>
+      <div class="extra">
+        <p>
+          <b>Also:</b> Specialisation Course in Python Application Development, CPIFP Alan Turing (2025-2026) · Technician
+          Diploma in Microcomputer Systems &amp; Networks, IES Gerald Brenan (2021-2023, EQF Level 4) · Cisco
+          certifications: Python Essentials 2, CCNAv7, IT Essentials.
+        </p>
+        <p><b>Languages:</b> Spanish — native · English — B2 (Trinity), used daily in written technical work.</p>
+      </div>
+    </section>
+  </body>
+</html>
