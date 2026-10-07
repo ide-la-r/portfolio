@@ -58,4 +58,10 @@ npm install
 npm run dev      # http://localhost:4321
 npm run build    # astro check + build into dist/
 npm run preview
+npm run deploy   # build + upload dist/ to Cloudflare (needs `npx wrangler login` once)
 ```
+
+## Deployment
+
+The site is a Cloudflare Worker that only serves static files (`wrangler.jsonc`): no server code
+runs. `public/_headers` sets caching and security headers, and unknown paths get `404.html`.

@@ -11,7 +11,7 @@
     "preview": "astro preview",
     "astro": "astro",
     "check": "astro check",
-    "deploy": "npm run build && npx --yes wrangler@4 pages deploy dist --project-name ismaeldelarosa --branch main"
+    "deploy": "npm run build && npx --yes wrangler@4 deploy"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",

@@ -1,0 +1,13 @@
+// Cloudflare deployment: a Worker that only serves the static files Astro builds.
+// `npm run deploy` builds the site and uploads dist/ with `wrangler deploy`.
+{
+  "name": "portfolio",
+  "compatibility_date": "2026-10-07",
+  "assets": {
+    "directory": "./dist",
+    // /en and /en/ both resolve to /en/index.html
+    "html_handling": "auto-trailing-slash",
+    // Unknown paths get dist/404.html with a 404 status
+    "not_found_handling": "404-page"
+  }
+}
