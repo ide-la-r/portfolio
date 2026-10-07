@@ -1,0 +1,22 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<!-- Served by Cloudflare for any path that does not exist, in both languages at once. -->
+<Base locale="es" title="Página no encontrada · Page not found" noindex>
+  <main id="main" class="container-page flex min-h-[100svh] flex-col justify-center py-24">
+    <p class="font-mono text-sm text-warm">404</p>
+    <h1 class="mt-4 text-[clamp(2.75rem,8vw,6rem)] leading-[0.95] font-semibold tracking-[-0.045em]">
+      Esta página no existe
+    </h1>
+    <p class="mt-5 text-xl text-muted" lang="en">This page does not exist.</p>
+    <div class="mt-10 flex flex-wrap gap-3 text-sm">
+      <a href="/" class="rounded-full bg-fg px-5 py-2.5 font-medium text-ink transition-opacity hover:opacity-85">
+        Volver al inicio
+      </a>
+      <a href="/en/" lang="en" class="rounded-full border border-line px-5 py-2.5 transition-colors hover:border-muted">
+        Back to the home page
+      </a>
+    </div>
+  </main>
+</Base>

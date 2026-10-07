@@ -5,9 +5,13 @@ import { locales, profile, t, type Locale } from '../i18n';
 
 interface Props {
   locale: Locale;
+  /** Overrides the page title, e.g. on the error page. */
+  title?: string;
+  /** Keeps the page out of search results. */
+  noindex?: boolean;
 }
 
-const { locale } = Astro.props;
+const { locale, title, noindex = false } = Astro.props;
 const copy = t(locale);
 const canonical = getAbsoluteLocaleUrl(locale, '');
 // The link preview shown by LinkedIn and friends, one per language (1200 × 630)
@@ -31,8 +35,9 @@ const person = {
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <title>{copy.meta.title}</title>
+    <title>{title ?? copy.meta.title}</title>
     <meta name="description" content={copy.meta.description} />
+    {noindex && <meta name="robots" content="noindex" />}
     <meta name="theme-color" content="#0a0d14" />
     <link rel="canonical" href={canonical} />
     {locales.map((l) => <link rel="alternate" hreflang={l} href={getAbsoluteLocaleUrl(l, '')} />)}
