@@ -31,11 +31,26 @@ const copy = t(locale).education;
     </ol>
 
     <div class="mt-8 grid gap-4 md:grid-cols-[9rem_1fr] md:gap-8" data-reveal>
+      <span class="eyebrow pt-1">{copy.languages.label}</span>
+      <div class="min-w-0">
+        <ul class="flex flex-wrap gap-2">
+          {
+            copy.languages.items.map((language) => (
+              <li class="rounded-full border border-line px-3 py-1 text-sm">
+                {language.name} <span class="ml-1 font-medium text-signal">{language.level}</span>
+              </li>
+            ))
+          }
+        </ul>
+        <p class="mt-3 text-sm text-muted">{copy.languages.note}</p>
+      </div>
+    </div>
+
+    <div class="mt-8 grid gap-4 md:grid-cols-[9rem_1fr] md:gap-8" data-reveal>
       <span class="eyebrow pt-1">Cisco</span>
       <ul class="flex flex-wrap gap-2">
         {copy.also.map((cert) => <li class="rounded-full border border-line px-3 py-1 text-sm">{cert}</li>)}
       </ul>
     </div>
-    <p class="mt-6 text-muted md:pl-[calc(9rem+2rem)]" data-reveal>{copy.languages}</p>
   </div>
 </section>

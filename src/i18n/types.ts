@@ -128,7 +128,12 @@ export interface Dictionary {
     title: string;
     items: { title: string; place: string; years: string; note: string }[];
     also: string[];
-    languages: string;
+    /** Spoken languages and their level, shown as a row of their own. */
+    languages: {
+      label: string;
+      items: { name: string; level: string }[];
+      note: string;
+    };
   };
   contact: { eyebrow: string; title: string; body: string; copy: string; copied: string; cv: string; footer: string };
 }

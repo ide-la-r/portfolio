@@ -273,7 +273,14 @@ export const en: Dictionary = {
       },
     ],
     also: ['Cisco Python Essentials 2', 'Cisco CCNAv7', 'Cisco IT Essentials'],
-    languages: 'Spanish, native · English, B2 (Trinity), used daily in written technical work.',
+    languages: {
+      label: 'Languages',
+      items: [
+        { name: 'Spanish', level: 'native' },
+        { name: 'English', level: 'B2 · Trinity' },
+      ],
+      note: 'English is part of my daily work: technical documentation and code review.',
+    },
   },
   contact: {
     eyebrow: 'Contact',
