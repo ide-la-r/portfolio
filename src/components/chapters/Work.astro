@@ -48,18 +48,29 @@ const providers = [
 
     <article class="m-card" data-card>
       <span class="m-score" data-score>scoring 82/100</span>
+      <!-- The same record twice: as the public source sends it, broken on purpose, and
+           as it is left after ingestion. Each problem is numbered where it occurs. -->
       <div class="m-layers">
-        <pre class="m-raw" data-raw data-js-only>{'{"TITULO":"SERV. MANT. ALUMBRADO PUB.",\n "organo":"AYTO. DE '}<b>MÃ¡LAGA</b>{'",\n "plazo":'}<b>null</b>{',\n "importe":'}<b>"1240000"</b>{',\n "cpv":"50232100"}'}</pre>
-        <dl class="m-clean" data-clean>
-          {
-            copy.card.map((field) => (
-              <>
-                <dt>{field.label}</dt>
-                <dd>{field.value}</dd>
-              </>
-            ))
-          }
-        </dl>
+        <div data-raw data-js-only>
+          <p class="m-state m-state-raw">{m.rawLabel}</p>
+          <pre class="m-raw">{'{"TITULO":"SERV. MANT. ALUMBRADO PUB.",\n "organo":"Ayto. de '}<b>MÃ¡laga</b><sup>1</sup>{'",\n "plazo":'}<b>null</b><sup>2</sup>{',\n "importe":'}<b>"1240000"</b><sup>3</sup>{',\n "cpv":"50232100"}'}</pre>
+          <ol class="m-notes">
+            {m.rawNotes.map((note, i) => <li><span>{i + 1}</span>{note}</li>)}
+          </ol>
+        </div>
+        <div data-clean>
+          <p class="m-state m-state-clean">{m.cleanLabel}</p>
+          <dl class="m-clean">
+            {
+              copy.card.map((field) => (
+                <>
+                  <dt>{field.label}</dt>
+                  <dd>{field.value}</dd>
+                </>
+              ))
+            }
+          </dl>
+        </div>
       </div>
     </article>
 
@@ -226,6 +237,55 @@ const providers = [
     font-weight: 400;
     color: var(--color-warm);
   }
+  .m-raw sup,
+  .m-notes span {
+    display: inline-grid;
+    place-items: center;
+    width: 14px;
+    height: 14px;
+    border-radius: 9999px;
+    background: var(--color-warm);
+    color: var(--color-ink);
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    font-weight: 500;
+    line-height: 1;
+  }
+  .m-raw sup {
+    margin-left: 3px;
+    vertical-align: 5px;
+  }
+
+  /* Says which of the two versions of the record is on screen */
+  .m-state {
+    margin: 0 0 10px;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .m-state-raw {
+    color: var(--color-warm);
+  }
+  .m-state-clean {
+    color: var(--color-ok);
+  }
+  .m-notes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 14px;
+    margin: 10px 0 0;
+    padding: 0;
+    list-style: none;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--color-warm);
+  }
+  .m-notes li {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
   .m-clean {
     margin: 0;
     display: grid;
@@ -260,7 +320,7 @@ const providers = [
 
   .m-job {
     left: 30px;
-    top: 350px;
+    top: 362px;
     width: 380px;
     display: grid;
     gap: 10px;
@@ -292,7 +352,7 @@ const providers = [
 
   .m-list {
     left: 30px;
-    top: 196px;
+    top: 212px;
     width: 380px;
     display: grid;
     gap: 8px;
@@ -321,7 +381,7 @@ const providers = [
 
   .m-meter {
     left: 30px;
-    top: 330px;
+    top: 340px;
     width: 380px;
   }
   .m-ms {

@@ -72,6 +72,11 @@ export interface Dictionary {
     /** The sample record that travels through ingestion, already clean. */
     card: { label: string; value: string }[];
     machine: {
+      /** Labels that tell the raw record apart from the clean one. */
+      rawLabel: string;
+      cleanLabel: string;
+      /** What is wrong with the raw record, in the order it appears in it. */
+      rawNotes: Tuple<string, 3>;
       trying: string;
       skip: string;
       resolves: string;

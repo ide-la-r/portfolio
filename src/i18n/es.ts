@@ -122,6 +122,9 @@ export const es: Dictionary = {
       { label: 'CPV', value: '50232100' },
     ],
     machine: {
+      rawLabel: 'Así llega de la fuente',
+      cleanLabel: 'Así queda tras la ingesta',
+      rawNotes: ['codificación rota', 'sin plazo', 'importe en texto'],
       trying: 'probando…',
       skip: 'sin clave → siguiente',
       resolves: 'resuelve',
